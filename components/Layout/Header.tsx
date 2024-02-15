@@ -64,27 +64,28 @@ export const Header = () => {
           >
             <h2 className="text-2xl">EduNex</h2>
           </a>
-          <div className="hidden lg:block">
-          <Navbar>
-          <NavbarContent className="sm:flex gap-4" justify="center">
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Features
-              </Link>
-            </NavbarItem>
-            <NavbarItem isActive>
-              <Link href="#" aria-current="page">
-                Customers
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#" aria-current="page">
-                Integrations
-              </Link>
-            </NavbarItem>
-          </NavbarContent>
-          </Navbar>
+
         </div>
+        <div className="hidden lg:block">
+          <Navbar>
+            <NavbarContent className="sm:flex gap-4" justify="center">
+              <NavbarItem>
+                <Link color="foreground" href="#">
+                  Features
+                </Link>
+              </NavbarItem>
+              <NavbarItem>
+                <Link href="#" color="foreground">
+                  Customers
+                </Link>
+              </NavbarItem>
+              <NavbarItem>
+                <Link color="foreground" href="#">
+                  Integrations
+                </Link>
+              </NavbarItem>
+            </NavbarContent>
+          </Navbar>
         </div>
         {isAuth ? (
           <button
