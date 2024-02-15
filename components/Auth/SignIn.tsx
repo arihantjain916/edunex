@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import {SetCookie} from '../../utils/setCookie';
 
-// delete
 
 const SignIn = () => {
   const router = useRouter();
