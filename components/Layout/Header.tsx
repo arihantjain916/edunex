@@ -70,13 +70,13 @@ export const Header = () => {
           <Navbar>
             <NavbarContent className="sm:flex gap-4" justify="center">
               <NavbarItem>
-                <Link color="foreground" href="#">
-                  Features
+                <Link color="foreground" href="/blog">
+                  Blog
                 </Link>
               </NavbarItem>
               <NavbarItem>
-                <Link href="#" color="foreground">
-                  Customers
+                <Link href="/contact-us" color="foreground">
+                  Contact-us
                 </Link>
               </NavbarItem>
               <NavbarItem>
