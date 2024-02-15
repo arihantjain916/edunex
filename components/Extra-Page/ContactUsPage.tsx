@@ -6,17 +6,18 @@ const ContactUs = () => {
           <div className="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
             <div className="lg:col-span-2 lg:py-12">
               <p className="max-w-xl text-lg">
-                At the same time, the fact that we are wholly owned and totally
-                independent from manufacturer and other group control gives you
-                confidence that we will only recommend what is right for you.
+                Send us message if you are discover any bug on our website or you have any problem.
+              </p>
+              <p className="max-w-xl text-lg">
+                Your feedback is valuable for us.
               </p>
               <div className="mt-8">
                 <a href="#" className="text-2xl font-bold text-pink-600">
                   {" "}
-                  0151 475 4450{" "}
+                  9672670732{" "}
                 </a>
                 <address className="mt-2 not-italic">
-                  282 Kevin Brook, Imogeneborough, CA 58517
+                  Teerthanker Mahaveer University, Moradabad, Uttart Pradesh
                 </address>
               </div>
             </div>
@@ -57,56 +58,7 @@ const ContactUs = () => {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
-                  <div>
-                    <label
-                      htmlFor="Option1"
-                      className="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white"
-                      tabIndex={0}
-                    >
-                      <input
-                        className="sr-only"
-                        id="Option1"
-                        type="radio"
-                        tabIndex={-1}
-                        name="option"
-                      />
-                      <span className="text-sm"> Option 1 </span>
-                    </label>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="Option2"
-                      className="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white"
-                      tabIndex={0}
-                    >
-                      <input
-                        className="sr-only"
-                        id="Option2"
-                        type="radio"
-                        tabIndex={-1}
-                        name="option"
-                      />
-                      <span className="text-sm"> Option 2 </span>
-                    </label>
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="Option3"
-                      className="block w-full cursor-pointer rounded-lg border border-gray-200 p-3 text-gray-600 hover:border-black has-[:checked]:border-black has-[:checked]:bg-black has-[:checked]:text-white"
-                      tabIndex={0}
-                    >
-                      <input
-                        className="sr-only"
-                        id="Option3"
-                        type="radio"
-                        tabIndex={-1}
-                        name="option"
-                      />
-                      <span className="text-sm"> Option 3 </span>
-                    </label>
-                  </div>
-                </div>
+                
                 <div>
                   <label className="sr-only" htmlFor="message">
                     Message
