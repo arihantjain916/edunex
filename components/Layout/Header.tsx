@@ -161,22 +161,22 @@ export const Header = () => {
                   <ul className="space-y-4">
                     <li>
                       <a
-                        href="/"
+                        href="/blog"
                         aria-label="Your Learning"
                         title="Your Learning"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
-                        Your Learning
+                        Blog
                       </a>
                     </li>
                     <li>
                       <a
-                        href="/"
+                        href="/contact-us"
                         aria-label="Features"
                         title="Features"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                       >
-                        Features
+                        Contact-Us
                       </a>
                     </li>
                     <li>
