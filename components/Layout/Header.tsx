@@ -1,6 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  Navbar,
+  NavbarContent,
+  NavbarItem,
+  Link
+} from "@nextui-org/react";
 
 // Create a separate LoginButton component
 const LoginButton = () => {
@@ -29,7 +35,7 @@ const RegisterButton = () => {
 
 // Navbar component
 export const Header = () => {
-    const isAuth = false;
+  const isAuth = false;
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -58,6 +64,27 @@ export const Header = () => {
           >
             <h2 className="text-2xl">EduNex</h2>
           </a>
+          <div className="hidden lg:block">
+          <Navbar>
+          <NavbarContent className="sm:flex gap-4" justify="center">
+            <NavbarItem>
+              <Link color="foreground" href="#">
+                Features
+              </Link>
+            </NavbarItem>
+            <NavbarItem isActive>
+              <Link href="#" aria-current="page">
+                Customers
+              </Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Link color="foreground" href="#" aria-current="page">
+                Integrations
+              </Link>
+            </NavbarItem>
+          </NavbarContent>
+          </Navbar>
+        </div>
         </div>
         {isAuth ? (
           <button
@@ -110,7 +137,7 @@ export const Header = () => {
                         alt="logo"
                         className="w-32 h-8"
                       /> */}
-                       <h2 className="text-2xl">EduNex</h2>
+                      <h2 className="text-2xl">EduNex</h2>
                     </a>
                   </div>
                   <div>
@@ -215,3 +242,4 @@ export const Header = () => {
     </div>
   );
 };
+
