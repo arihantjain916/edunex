@@ -13,7 +13,7 @@ function scrollToTop() {
 const SignUp = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    first_name: "",
+    name: "",
     username: "",
     email: "",
     password: "",
@@ -64,7 +64,7 @@ const SignUp = () => {
     if (apidata.success) {
       toast.success(apidata.message);
       setFormData({
-        first_name: "",
+        name: "",
         username: "",
         email: "",
         password: "",
@@ -170,7 +170,7 @@ const SignUp = () => {
                       required
                       type="text"
                       id="FirstName"
-                      name="first_name"
+                      name="name"
                       className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                     />
                   </div>
