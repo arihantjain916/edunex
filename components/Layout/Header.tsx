@@ -62,7 +62,7 @@ export const Header = () => {
             title="Company"
             className="inline-flex items-center mr-8"
           >
-            <h2 className="text-2xl">EduNex</h2>
+            <h2 className="text-3xl font-bold ml-10">EduNex</h2>
           </a>
 
         </div>
@@ -70,17 +70,17 @@ export const Header = () => {
           <Navbar className="bg-gray-100">
             <NavbarContent className="sm:flex gap-4 bg-gray-100" justify="center">
               <NavbarItem>
-                <Link color="foreground" href="/blog">
+                <Link color="foreground" href="/blog" className=" text-lg">
                   Blog
                 </Link>
               </NavbarItem>
               <NavbarItem>
-                <Link href="/contact-us" color="foreground">
+                <Link href="/contact-us" color="foreground" className=" text-lg">
                   Contact-us
                 </Link>
               </NavbarItem>
               <NavbarItem>
-                <Link color="foreground" href="#">
+                <Link color="foreground" href="#" className=" text-lg">
                   Integrations
                 </Link>
               </NavbarItem>
