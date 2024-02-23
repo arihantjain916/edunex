@@ -1,3 +1,4 @@
+import Link from "next/link";
 const ErrorPage = () => {
   return (
     <>
@@ -27,6 +28,11 @@ const ErrorPage = () => {
           </h1>
 
           <p className="mt-4 text-gray-500">We can't find that page.</p>
+          <Link href="/">
+            <button className="border border-pink-600 bg-pink-600 text-white rounded-lg px-4 py-2 mt-6">
+              Go Back Home
+            </button>
+          </Link>
         </div>
       </div>
     </>

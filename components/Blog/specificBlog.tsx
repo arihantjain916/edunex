@@ -10,6 +10,7 @@ const SpecificBlog = (props: any) => {
     tag: string;
     publishedAt: string;
     id: string;
+    image:string
     author: {
       username: string;
       role: string;
@@ -35,6 +36,9 @@ const SpecificBlog = (props: any) => {
     <>
       <div>Specific Blog</div>
       <div>{apidata?.title}</div>
+      <div>
+        <img src={apidata?.image} alt="image" />
+      </div>
     </>
   );
 };

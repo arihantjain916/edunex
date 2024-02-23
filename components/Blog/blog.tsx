@@ -1,49 +1,73 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { getAllBlogData } from "../../utils/blogapi";
+import Loader from "../loader/Loader";
+
+interface BlogPost {
+  content: string;
+  tag: string;
+  publishedAt: string;
+  id: string;
+  title: string;
+  slug: string;
+  author: {
+    username: string;
+    role: string;
+    href: string;
+    imageUrl: string;
+  };
+}
 
 export default function Blog() {
-  interface Blog {
-    content: string;
-    tag: string;
-    publishedAt: string;
-    id: string;
-    title: string;
-    slug: string;
-    author: {
-      username: string;
-      role: string;
-      href: string;
-      imageUrl: string;
-    };
-  }
-
-  const [blog, setBlog] = useState<Blog[]>([]);
+  const [blog, setBlog] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchData() {
-      const apidata = await getAllBlogData();
-      if (apidata.data) {
-        const formattedData = apidata.data.map((post: any) => ({
-          ...post,
-          publishedAt: new Date(post.publishedAt).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }),
-        }));
-        setBlog(formattedData);
+    const fetchData = async () => {
+      try {
+        const apidata = await getAllBlogData();
+        if (apidata.data) {
+          const formattedData = apidata.data.map((post: any) => ({
+            ...post,
+            publishedAt: new Date(post.publishedAt).toLocaleDateString(
+              "en-US",
+              {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              }
+            ),
+          }));
+          setBlog(formattedData);
+          setLoading(false);
+        } else {
+          setError(apidata.response.data.error);
+          setLoading(false);
+        }
+      } catch (error) {
+        setError("An error occurred while fetching data.");
+        setLoading(false);
       }
-      else {
-        return (
-          <>
-            <h1>{apidata.response.data.error}</h1>
-          </>
-        );
-      }
-    }
+    };
+
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <>
+        <div className="h-screen flex items-center justify-center">
+          <Loader />
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
 
   return (
     <div className="bg-white py-24 sm:py-32">
@@ -75,7 +99,7 @@ export default function Blog() {
               </div>
               <div className="group relative">
                 <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                <a href={`/blog/${post.slug}`}>
+                  <a href={`/blog/${post.slug}`}>
                     <span className="absolute inset-0" />
                     {post.title}
                   </a>
@@ -86,13 +110,13 @@ export default function Blog() {
               </div>
               <div className="relative mt-8 flex items-center gap-x-4">
                 <img
-                  src="https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max"
+                  src={post.author.imageUrl}
                   alt="profile-image"
                   className="h-10 w-10 rounded-full bg-gray-50"
                 />
                 <div className="text-sm leading-6">
                   <p className="font-semibold text-gray-900">
-                    <a href="#">
+                    <a href={post.author.href}>
                       <span className="absolute inset-0" />
                       {post.author.username}
                     </a>

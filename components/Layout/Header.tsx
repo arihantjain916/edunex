@@ -53,7 +53,7 @@ export const Header = () => {
   };
 
   return (
-    <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+    <div className="bg-gray-100 px-4 py-5 w-full">
       <div className="relative flex items-center justify-between">
         <div className="flex items-center">
           <a
@@ -67,8 +67,8 @@ export const Header = () => {
 
         </div>
         <div className="hidden lg:block">
-          <Navbar>
-            <NavbarContent className="sm:flex gap-4" justify="center">
+          <Navbar className="bg-gray-100">
+            <NavbarContent className="sm:flex gap-4 bg-gray-100" justify="center">
               <NavbarItem>
                 <Link color="foreground" href="/blog">
                   Blog
