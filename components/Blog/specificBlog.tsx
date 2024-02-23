@@ -30,7 +30,6 @@ const SpecificBlog = (props: any) => {
     fetchData();
   }, []);
 
-  console.log(apidata);
 
   return (
     <>
