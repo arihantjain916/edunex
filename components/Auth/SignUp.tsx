@@ -4,14 +4,18 @@ import { sendDataToRegisterApi } from "../../utils/authapi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { register } from "@/redux/features/auth";
+const isBrowser = () => typeof window !== "undefined"; //The approach recommended by Next.js
 
 function scrollToTop() {
-    if (!isBrowser()) return;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!isBrowser()) return;
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 const SignUp = () => {
   const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -44,25 +48,31 @@ const SignUp = () => {
       setError(
         "Password must contain at least one uppercase letter and one number"
       );
-      scrollToTop()
+      scrollToTop();
       return;
     }
 
     if (formData.password.length < 8) {
       setError("Password must be at least 8 characters long");
-      scrollToTop()
+      scrollToTop();
       return;
     }
 
     if (formData.password !== formData.password_confirmation) {
       setError("Password and confirmation do not match");
-      scrollToTop()
+      scrollToTop();
       return;
     }
-    
+
     const apidata = await sendDataToRegisterApi(formData);
     if (apidata.success) {
       toast.success(apidata.message);
+      dispatch(
+        register({
+          username: formData.username,
+          email: formData.email,
+        })
+      );
       setFormData({
         name: "",
         username: "",
@@ -71,11 +81,9 @@ const SignUp = () => {
         password_confirmation: "",
       });
       setError("");
-      router.replace(
-        "/auth/login"
-      )
+      router.replace("/auth/login");
     } else {
-      toast.error(apidata.response.data.error);
+      toast.error(apidata.response?.data?.error || "Something went wrong");
     }
   };
   const handleClose = () => {

@@ -4,11 +4,14 @@ import { sendDatatoLoginApi } from "../../utils/authapi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import {SetCookie} from '../../utils/setCookie';
-
+import { SetCookie } from "../../utils/setCookie";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { login } from "@/redux/features/auth";
 
 const SignIn = () => {
   const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -30,13 +33,12 @@ const SignIn = () => {
     const apidata = await sendDatatoLoginApi(formData);
     if (apidata.success) {
       toast.success(apidata.message);
+      dispatch(login());
       setFormData({ username: "", password: "" });
       SetCookie(apidata.token);
-      console.log(apidata.token);
-      
       router.push("/");
     } else {
-      toast.error(apidata.response.data.error);
+      toast.error(apidata.response?.data?.error || "Something went wrong");
     }
 
     setLoading(false);

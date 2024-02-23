@@ -10,7 +10,7 @@ const SpecificBlog = (props: any) => {
     tag: string;
     publishedAt: string;
     id: string;
-    image:string
+    image: string;
     author: {
       username: string;
       role: string;
@@ -20,10 +20,9 @@ const SpecificBlog = (props: any) => {
   const [apidata, setApiData] = useState<Blog>();
   async function fetchData() {
     const response: any = await getSpecificBlog(props.slug);
-    if(response.data){
+    if (response.data) {
       setApiData(response.data);
-    }
-    else{
+    } else {
       setApiData(response.response.data.error);
     }
   }
@@ -31,13 +30,12 @@ const SpecificBlog = (props: any) => {
     fetchData();
   }, []);
 
-
   return (
     <>
       <div>Specific Blog</div>
       <div>{apidata?.title}</div>
       <div>
-        <img src={apidata?.image} alt="image" />
+        <p className="">{apidata?.content}</p>
       </div>
     </>
   );

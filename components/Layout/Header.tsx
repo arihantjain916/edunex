@@ -1,16 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { RootState } from "@/redux/store";
+import { logout } from "@/redux/features/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { Navbar, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import {
-  Navbar,
-  NavbarContent,
-  NavbarItem,
-  Link
-} from "@nextui-org/react";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Create a separate LoginButton component
 const LoginButton = () => {
-  const isAuth = false;
   return (
     <a
       className="hidden rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 lg:block"
@@ -35,8 +42,9 @@ const RegisterButton = () => {
 
 // Navbar component
 export const Header = () => {
-  const isAuth = false;
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state: RootState) => state.auth.isAuthenticated);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const openMenu = () => {
@@ -48,7 +56,7 @@ export const Header = () => {
   };
 
   const onLogout = () => {
-    console.log("Logout");
+    dispatch(logout());
     router.push("/");
   };
 
@@ -64,18 +72,24 @@ export const Header = () => {
           >
             <h2 className="text-3xl font-bold ml-10">EduNex</h2>
           </a>
-
         </div>
         <div className="hidden lg:block">
           <Navbar className="bg-gray-100">
-            <NavbarContent className="sm:flex gap-4 bg-gray-100" justify="center">
+            <NavbarContent
+              className="sm:flex gap-4 bg-gray-100"
+              justify="center"
+            >
               <NavbarItem>
                 <Link color="foreground" href="/blog" className=" text-lg">
                   Blog
                 </Link>
               </NavbarItem>
               <NavbarItem>
-                <Link href="/contact-us" color="foreground" className=" text-lg">
+                <Link
+                  href="/contact-us"
+                  color="foreground"
+                  className=" text-lg"
+                >
                   Contact-us
                 </Link>
               </NavbarItem>
@@ -88,14 +102,34 @@ export const Header = () => {
           </Navbar>
         </div>
         {isAuth ? (
-          <button
-            onClick={onLogout}
-            className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 lg:block"
-          >
-            Logout
-          </button>
+          <div className="px-5 py-2.5 mr-5 lg:block hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>Billing</DropdownMenuItem>
+                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>Subscription</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <button
+                  onClick={() => {
+                    onLogout();
+                  }}
+                >
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </button>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         ) : (
-          <div className="sm:flex sm:gap-4 hidden md:hidden lg:flex lg:gap-4">
+          <div className="sm:flex sm:gap-4 mr-8 hidden md:hidden lg:flex lg:gap-4">
             <LoginButton />
             <RegisterButton />
           </div>
@@ -243,4 +277,3 @@ export const Header = () => {
     </div>
   );
 };
-
