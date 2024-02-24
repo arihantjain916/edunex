@@ -2,14 +2,24 @@
 
 import { useState, useEffect } from "react";
 import { getSpecificBlog } from "../../utils/blogapi";
+import "./blog.css";
+import CommentPage from "../comment/Comment";
+import Loading from "../loader/Loader";
+import Image from "next/image";
 
-const SpecificBlog = (props: any) => {
+function formattedDate(date: any) {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+const SpecificBlog = ({ slug }: any) => {
   interface Blog {
     title: string;
     content: string;
-    tag: string;
     publishedAt: string;
-    id: string;
+    slug: string;
     image: string;
     author: {
       username: string;
@@ -17,25 +27,59 @@ const SpecificBlog = (props: any) => {
       imageUrl: string;
     };
   }
-  const [apidata, setApiData] = useState<Blog>();
+  const [apidata, setApiData] = useState<Blog>()!;
+  const [loading, setLoading] = useState(true);
   async function fetchData() {
-    const response: any = await getSpecificBlog(props.slug);
+    const response: any = await getSpecificBlog(slug);
     if (response.data) {
       setApiData(response.data);
+      setLoading(false);
     } else {
       setApiData(response.response.data.error);
+      setLoading(false);
     }
   }
   useEffect(() => {
     fetchData();
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
-      <div>Specific Blog</div>
-      <div>{apidata?.title}</div>
       <div>
-        <p className="">{apidata?.content}</p>
+        <div id="page-body" className="max-w-[1280px] my-0 mx-auto">
+          <div id="center" className="w-full">
+            <main>
+              <div className="title font-mono text-white">
+                <p className="ml-4 mb-4 text-3xl font-serif capitalize">
+                  {apidata?.title}
+                </p>
+              </div>
+              <div className="ml-4 mt-4 text-base font-serif">
+                {formattedDate(apidata?.publishedAt)}
+              </div>
+              <div className="content">
+                <div className="main-content">
+                  <p>{apidata?.content}</p>
+                </div>
+                {apidata?.image && (
+                  <Image
+                    src={apidata?.image}
+                    alt="blog image"
+                    width={800}
+                    height={20}
+                  />
+                )}
+                <div className="main-content">
+                  <p>{apidata?.content}</p>
+                </div>
+                <CommentPage pageSlug={apidata?.slug} />
+              </div>
+            </main>
+          </div>
+        </div>
       </div>
     </>
   );

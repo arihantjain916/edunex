@@ -1,0 +1,27 @@
+.title{
+    background-color: #5e5c61;
+    box-sizing: border-box;
+    margin-bottom: -1px;
+    padding-bottom: 86px;
+    padding-right: 290px;
+    padding-left: 140px;
+    padding-top: 124px;
+    width: 100%;
+}
+.content{
+    padding-right: 290px;
+    position: relative;
+    margin-left: 140px;
+    margin-top: 20px;
+    margin-bottom: 32px;
+}
+
+.main-content{
+    color: #3e3f3c;
+    font: 400 20px Lato, sans-serif;
+    line-height: 2;
+    margin-bottom: 24px;
+    color: #292929;
+    font: 400 20px Lato, sans-serif;
+    line-height: 2;
+}
