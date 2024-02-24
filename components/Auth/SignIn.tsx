@@ -8,7 +8,7 @@ import { SetCookie } from "../../utils/setCookie";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { login } from "@/redux/features/auth";
-import PathName from "../../utils/pathname";
+// import PathName from "../../utils/pathname";
 
 const SignIn = () => {
   const router = useRouter();
@@ -55,7 +55,7 @@ const SignIn = () => {
   return (
     <>
       <ToastContainer position="bottom-right" />
-      <PathName />
+      {/* <PathName /> */}
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
