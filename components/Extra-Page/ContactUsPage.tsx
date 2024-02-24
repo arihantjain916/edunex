@@ -6,7 +6,7 @@ const ContactUs = () => {
           <div className="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
             <div className="lg:col-span-2 lg:py-12">
               <p className="max-w-xl text-lg">
-                Send us message if you are discover any bug on our website or you have any problem.
+                Send us message if you discover any bug on our website or you have any problem.
               </p>
               <p className="max-w-xl text-lg">
                 Your feedback is valuable for us.

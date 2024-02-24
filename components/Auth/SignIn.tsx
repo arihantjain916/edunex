@@ -8,6 +8,7 @@ import { SetCookie } from "../../utils/setCookie";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { login } from "@/redux/features/auth";
+import PathName from "../../utils/pathname";
 
 const SignIn = () => {
   const router = useRouter();
@@ -33,8 +34,15 @@ const SignIn = () => {
     const apidata = await sendDatatoLoginApi(formData);
     if (apidata.success) {
       toast.success(apidata.message);
-      dispatch(login());
+
       setFormData({ username: "", password: "" });
+      dispatch(
+        login({
+          username: apidata.user.username,
+          email: apidata.user.email,
+          name: apidata.user.name,
+        })
+      );
       SetCookie(apidata.token);
       router.push("/");
     } else {
@@ -47,7 +55,7 @@ const SignIn = () => {
   return (
     <>
       <ToastContainer position="bottom-right" />
-
+      <PathName />
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
@@ -95,7 +103,7 @@ const SignIn = () => {
                       name="username"
                       value={formData.username}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      className="w-full border rounded-lg border-gray-500 p-3 text-sm"
                     />
                   </div>
                   <div className="col-span-6">
@@ -112,7 +120,7 @@ const SignIn = () => {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      className="w-full border rounded-lg border-gray-500 p-3 text-sm"
                     />
                   </div>
                   <div className="col-span-6 sm:flex sm:items-center sm:gap-4">

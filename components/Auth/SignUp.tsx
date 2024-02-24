@@ -179,7 +179,7 @@ const SignUp = () => {
                       type="text"
                       id="FirstName"
                       name="name"
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      className="w-full border rounded-lg border-gray-500 p-3 text-sm"
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -194,7 +194,7 @@ const SignUp = () => {
                       type="text"
                       id="username"
                       name="username"
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      className="w-full border rounded-lg border-gray-500 p-3 text-sm"
                     />
                   </div>
                   <div className="col-span-6">
@@ -209,7 +209,7 @@ const SignUp = () => {
                       type="email"
                       id="Email"
                       name="email"
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      className="w-full border rounded-lg border-gray-500 p-3 text-sm"
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -224,7 +224,7 @@ const SignUp = () => {
                       type="password"
                       id="Password"
                       name="password"
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      className="w-full border rounded-lg border-gray-500 p-3 text-sm"
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -239,7 +239,7 @@ const SignUp = () => {
                       type="password"
                       id="PasswordConfirmation"
                       name="password_confirmation"
-                      className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                      className="w-full border rounded-lg border-gray-500 p-3 text-sm"
                     />
                   </div>
                   <div className="col-span-6">

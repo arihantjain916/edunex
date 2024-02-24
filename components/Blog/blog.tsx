@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { getAllBlogData } from "../../utils/blogapi";
 import Loader from "../loader/Loader";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface BlogPost {
   content: string;
@@ -59,8 +60,28 @@ export default function Blog() {
   if (loading) {
     return (
       <>
-        <div className="h-screen flex items-center justify-center">
-          <Loader />
+        <div className="py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:mx-0">
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                From the blog
+              </h2>
+              <p className="mt-2 text-lg leading-8 text-gray-600">
+               Increase your skills with the blogs from the expert...
+              </p>
+            </div>
+            <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+              <div className="flex flex-col space-y-3">
+                <div className="space-y-2">
+                  <Skeleton className="border rounded-lg overflow-hidden shadow-md bg-white" />
+                  <Skeleton className="w-full h-48" />
+                  <Skeleton className="h-4 w-[50px]" />
+                  <Skeleton className="h-5 w-[55px]" />
+                  <Skeleton className="h-10 w-[300px]" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );
@@ -76,7 +97,7 @@ export default function Blog() {
                 From the blog
               </h2>
               <p className="mt-2 text-lg leading-8 text-gray-600">
-                Learn how to grow your business with our expert advice.
+               Increase your skills with the blogs from the expert...
               </p>
             </div>
             <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -100,7 +121,7 @@ export default function Blog() {
             From the blog
           </h2>
           <p className="mt-2 text-lg leading-8 text-gray-600">
-            Learn how to grow your business with our expert advice.
+           Increase your skills with the blogs from the expert...
           </p>
         </div>
         <div className="mx-auto mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:max-w-7xl">
@@ -115,7 +136,10 @@ export default function Blog() {
                 alt={post.title}
               />
               <div className="p-6">
-                <a href={`/blog?tag=${post.tag}`} className="text-sm font-medium text-indigo-600">
+                <a
+                  href={`/blog?tag=${post.tag}`}
+                  className="text-sm font-medium text-indigo-600"
+                >
                   {post.tag}
                 </a>
                 <h2 className="text-xl font-semibold text-gray-800 mb-3">

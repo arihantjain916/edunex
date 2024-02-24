@@ -44,7 +44,9 @@ const RegisterButton = () => {
 export const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const { isAuthenticated, username } = useSelector(
+    (state: RootState) => state.auth
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const openMenu = () => {
@@ -101,8 +103,8 @@ export const Header = () => {
             </NavbarContent>
           </Navbar>
         </div>
-        {isAuth ? (
-          <div className="px-5 py-2.5 mr-5 lg:block hidden">
+        {isAuthenticated ? (
+          <div className="px-5 py-2.5 mr-10 lg:block hidden">
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Avatar>
@@ -111,6 +113,9 @@ export const Header = () => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
+                <p className="font-bold">Signed as</p>
+                <p>{username}</p>
+                <DropdownMenuSeparator />
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
@@ -233,14 +238,20 @@ export const Header = () => {
                         About Us
                       </a>
                     </li>
-                    {isAuth ? (
+                    {isAuthenticated ? (
                       <li>
                         <a
                           aria-label="Sign in"
                           title="Sign in"
                           className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
-                          <button>Logout</button>
+                          <button
+                            onClick={() => {
+                              onLogout();
+                            }}
+                          >
+                            Logout
+                          </button>
                         </a>
                       </li>
                     ) : (

@@ -4,7 +4,7 @@ import cookie from "js-cookie";
 export interface AuthState {
   isAuthenticated: boolean;
   username: string;
-
+  name: string
   email: string
 }
 
@@ -12,15 +12,19 @@ export interface AuthState {
 const initialState: AuthState = {
   isAuthenticated: false,
   username: "",
-  email: ""
+  email: "",
+  name:""
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state) => {
+    login: (state,action) => {
       state.isAuthenticated = true;
+      state.username = action.payload.username
+      state.email = action.payload.email
+      state.name = action.payload.name
     },
     logout: (state) => {
       cookie.remove("AUTH_TOKEN");
@@ -28,6 +32,7 @@ export const authSlice = createSlice({
       state.username = "";
       // state.imageUrl = "";
       state.email = ""
+      state.name = ""
     },
     register :(state,action) =>{ 
       state.username = action.payload.username
