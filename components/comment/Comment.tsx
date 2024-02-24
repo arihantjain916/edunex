@@ -1,6 +1,7 @@
-import React from "react";
-
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 const CommentPage = ({ pageSlug }: any) => {
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   return (
     <>
       <div id="comments" className="mb-5">
@@ -48,7 +49,9 @@ const CommentPage = ({ pageSlug }: any) => {
           id="comment"
           placeholder="Write a comment"
           className=" border-b-2 border-indigo-500 outline-none w-full text-xl"
+          disabled={!isAuthenticated}
         />
+        {!isAuthenticated ? <p>You must be login to comment</p> : ""}
         <button className="mt-4 border border-gray-600 bg-gray-600 text-white rounded-lg px-4 py-2">
           PUBLISH
         </button>
