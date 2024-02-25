@@ -7,7 +7,7 @@ export default function Blog({ params }: any) {
   return (
     <>
       <Header />
-      <div className="mt-10">
+      <div className="sm:mt-10">
         <SpecificBlog slug={params.slug} />
       </div>
       <Footer />

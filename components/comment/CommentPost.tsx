@@ -34,6 +34,7 @@ const CommentPost = ({ slug, isAuth }: Props) => {
       />
       {!isAuth && <p>You must be logged in to comment</p>}
       <button
+        type="submit"
         onClick={handleSubmit}
         className="mt-4 border border-gray-600 bg-gray-600 text-white rounded-lg px-4 py-2"
         disabled={!isAuth}

@@ -5,6 +5,18 @@ import { sendDataToContactApi } from "../../utils/contactapi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// Validate Email
+
+const validateEmail = (email: string) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
+
+const validatePhone = (phone: string) => {
+  return phone.match(/^(0|91)?[6-9][0-9]{9}$/);
+};
+
 const ContactUs = () => {
   const [formData, setformData] = useState({
     name: "",
@@ -15,6 +27,26 @@ const ContactUs = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.message ||
+      !formData.phone
+    ) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
+    if (!validateEmail(formData.email)) {
+      toast.error("Please enter a valid email");
+      return;
+    }
+
+    if (!validatePhone(formData.phone)) {
+      toast.error("Please enter a valid phone number");
+      return;
+    }
 
     const apiData = await sendDataToContactApi(formData);
     if (apiData.success) {
@@ -50,7 +82,7 @@ const ContactUs = () => {
                   9672670732{" "}
                 </a>
                 <address className="mt-2 not-italic">
-                  Teerthanker Mahaveer University, Moradabad, Uttart Pradesh
+                  Teerthanker Mahaveer University, Moradabad, Uttar Pradesh
                 </address>
               </div>
             </div>
@@ -69,6 +101,7 @@ const ContactUs = () => {
                     onChange={(e) =>
                       setformData({ ...formData, name: e.target.value })
                     }
+                    required
                   />
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -118,6 +151,7 @@ const ContactUs = () => {
                     onChange={(e) =>
                       setformData({ ...formData, message: e.target.value })
                     }
+                    required
                   />
                 </div>
                 <div className="mt-4">

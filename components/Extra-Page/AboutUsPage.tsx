@@ -1,11 +1,12 @@
-import TeamPage from "./TeamPage";
+import { TeamPage } from "./TeamPage";
+import AboutusContent from "./AboutusContent";
 const AboutUsPage = () => {
   return (
     <>
-      <h1>About Us Page</h1>
+      <AboutusContent />
       <TeamPage />
     </>
   );
 };
 
-export default AboutUsPage
+export default AboutUsPage;

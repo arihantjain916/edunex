@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+
 import { getSpecificBlog } from "../../utils/blogapi";
 import "./blog.css";
 import CommentPage from "../comment/Comment";
 import Loading from "../loader/Loader";
-import Image from "next/image";
+import { AuthorDetails } from "../Extra-Page/AuthorDetails";
 
 function formattedDate(date: any) {
   return new Date(date).toLocaleDateString("en-US", {
@@ -25,9 +27,10 @@ const SpecificBlog = ({ slug }: any) => {
       username: string;
       role: string;
       imageUrl: string;
+      email: string;
     };
   }
-  const [apidata, setApiData] = useState<Blog>()!;
+  const [apidata, setApiData] = useState<Blog>();
   const [loading, setLoading] = useState(true);
   async function fetchData() {
     const response: any = await getSpecificBlog(slug);
@@ -44,7 +47,11 @@ const SpecificBlog = ({ slug }: any) => {
   }, []);
 
   if (loading) {
-    return <Loading />;
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Loading />
+      </div>
+    );
   }
   return (
     <>
@@ -70,10 +77,18 @@ const SpecificBlog = ({ slug }: any) => {
                     alt="blog image"
                     width={800}
                     height={20}
+                    className="mx-auto mb-1"
                   />
                 )}
                 <div className="main-content">
                   <p>{apidata?.content}</p>
+                </div>
+                <div className="mb-4">
+                  <AuthorDetails
+                    name={apidata?.author?.username}
+                    username={apidata?.author?.username}
+                    role={apidata?.author?.role}
+                  />
                 </div>
                 <CommentPage pageSlug={apidata?.slug} />
               </div>
