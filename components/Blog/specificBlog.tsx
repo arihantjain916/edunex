@@ -85,9 +85,9 @@ const SpecificBlog = ({ slug }: any) => {
                 </div>
                 <div className="mb-4">
                   <AuthorDetails
-                    name={apidata?.author?.username}
-                    username={apidata?.author?.username}
-                    role={apidata?.author?.role}
+                    name={apidata?.author?.username!}
+                    username={apidata?.author?.username!}
+                    role={apidata?.author?.role!}
                   />
                 </div>
                 <CommentPage pageSlug={apidata?.slug} />
