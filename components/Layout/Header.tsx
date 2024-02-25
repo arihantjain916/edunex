@@ -96,8 +96,8 @@ export const Header = () => {
                 </Link>
               </NavbarItem>
               <NavbarItem>
-                <Link color="foreground" href="#" className=" text-lg">
-                  Integrations
+                <Link color="foreground" href="/about-us" className=" text-lg">
+                  About Us
                 </Link>
               </NavbarItem>
             </NavbarContent>
@@ -119,9 +119,6 @@ export const Header = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <button
                   onClick={() => {
@@ -172,11 +169,6 @@ export const Header = () => {
                       title="Company"
                       className="inline-flex items-center mr-8"
                     >
-                      {/* <img
-                        src="/learnlit_logo.svg"
-                        alt="logo"
-                        className="w-32 h-8"
-                      /> */}
                       <h2 className="text-2xl">EduNex</h2>
                     </a>
                   </div>
@@ -218,19 +210,10 @@ export const Header = () => {
                         Contact-Us
                       </a>
                     </li>
+
                     <li>
                       <a
-                        href="/"
-                        aria-label="Pricing"
-                        title="Pricing"
-                        className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
-                      >
-                        Pricing
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="/"
+                        href="/about-us"
                         aria-label="About Us"
                         title="About Us"
                         className="font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"

@@ -33,9 +33,9 @@ const SignIn = () => {
 
     const apidata = await sendDatatoLoginApi(formData);
     if (apidata.success) {
+      setFormData({ username: "", password: "" });
       toast.success(apidata.message);
 
-      setFormData({ username: "", password: "" });
       dispatch(
         login({
           username: apidata.user.username,

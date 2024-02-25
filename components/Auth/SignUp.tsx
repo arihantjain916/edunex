@@ -66,6 +66,14 @@ const SignUp = () => {
 
     const apidata = await sendDataToRegisterApi(formData);
     if (apidata.success) {
+      setFormData({
+        name: "",
+        username: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+      });
+      setError("");
       toast.success(apidata.message);
       dispatch(
         register({
