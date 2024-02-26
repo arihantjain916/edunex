@@ -19,3 +19,21 @@ export const getSpecificBlog = async (slug: string) => {
     return error;
   }
 };
+
+export const getBlogbyUsername = async (username: string) => {
+  try {
+    const response = await axios.get(`${API}/blog/user/${username}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getBlogbyCategory = async (tag: string) => {
+  try {
+    const response = await axios.get(`${API}/blog/tag/${tag}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

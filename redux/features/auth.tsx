@@ -6,6 +6,7 @@ export interface AuthState {
   username: string;
   name: string
   email: string
+  role:string
 }
 
 
@@ -13,7 +14,8 @@ const initialState: AuthState = {
   isAuthenticated: false,
   username: "",
   email: "",
-  name:""
+  name:"",
+  role:""
 };
 
 export const authSlice = createSlice({
@@ -25,6 +27,7 @@ export const authSlice = createSlice({
       state.username = action.payload.username
       state.email = action.payload.email
       state.name = action.payload.name
+      state.role = action.payload.role
     },
     logout: (state) => {
       cookie.remove("AUTH_TOKEN");
@@ -33,6 +36,7 @@ export const authSlice = createSlice({
       // state.imageUrl = "";
       state.email = ""
       state.name = ""
+      state.role = ""
     },
     register :(state,action) =>{ 
       state.username = action.payload.username

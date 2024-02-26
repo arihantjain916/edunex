@@ -41,6 +41,7 @@ const SignIn = () => {
           username: apidata.user.username,
           email: apidata.user.email,
           name: apidata.user.name,
+          role: apidata.user.role,
         })
       );
       SetCookie(apidata.token);

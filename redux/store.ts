@@ -2,6 +2,7 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth";
+import blogReducer from "./features/blog";
 
 import {
   persistStore,
@@ -39,10 +40,12 @@ const persistConfig = {
 };
 
 const AuthReducer = persistReducer(persistConfig, authReducer);
+const BlogReducer = persistReducer(persistConfig, blogReducer);
 
 export const store = configureStore({
   reducer: {
     auth: AuthReducer,
+    blog: BlogReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
