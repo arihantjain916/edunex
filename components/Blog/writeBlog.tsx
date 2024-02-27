@@ -1,39 +1,94 @@
 "use client";
-import { useState } from "react";
+
+"use client";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveBlog } from "@/redux/features/blog";
+import { updateBlog } from "@/redux/features/blog";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { updateSpecificlog } from "@/utils/blogapi";
 
-const WriteBlog = () => {
+const formats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+];
+const modules = {
+  toolbar: [
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ size: [] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+  ],
+  clipboard: {
+    matchVisual: false,
+  },
+};
+
+const WriteBlog = (props: any) => {
   const dispatch = useDispatch();
-
   const { posts } = useSelector((state: any) => state.blog);
-
-  console.log(posts);
-
   const [textBoxValue, setTextBoxValue] = useState("");
-  // const [savedContent, setSavedContent] = useState("");
+  const [savedContent, setSavedContent] = useState<any>(null);
 
-  const handleSaveClick = () => {
-    const id = Date.now();
-    dispatch(saveBlog({ id, textBoxValue }));
+  useEffect(() => {
+    const specificPost = posts.find((post: any) => post.id === props.blogId);
+    setSavedContent(specificPost);
+    setTextBoxValue(specificPost?.content || "");
+  }, [posts, props.blogId]);
+
+  const handleSaveClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    dispatch(
+      updateBlog({ postId: props.blogId, updatedContent: textBoxValue })
+    );
   };
 
-  const handleChange = (event: any) => {
-    setTextBoxValue(event.target.value);
+  const handleEditorChange = (newContent: string) => {
+    setTextBoxValue(newContent);
   };
 
+  const handleSave = async() => {
+    console.log(textBoxValue);
+    console.log(props.blogId);
+    const data = {
+      content: textBoxValue
+    }
+    const response = await updateSpecificlog(props.blogId, textBoxValue);
+    console.log(response.success);
+  };
   return (
     <div>
-      <textarea value={textBoxValue} onChange={handleChange} />
-      <button onClick={handleSaveClick}>Save</button>
-      <div>
-        <h2>Saved Content:</h2>
-        <p>
-          {posts.map((post: any) => (
-            <h1>{post.textBoxValue}</h1>
-          ))}
-        </p>
-      </div>
+      <ReactQuill
+        theme="snow"
+        onChange={handleEditorChange}
+        modules={modules}
+        formats={formats}
+        value={textBoxValue}
+        bounds="#root"
+        placeholder="Write Something"
+      />
+
+      <button onClick={handleSaveClick}>Update</button>
+      <br />
+      <button type="submit" onClick={handleSave}>
+        Publish
+      </button>
     </div>
   );
 };

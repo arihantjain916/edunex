@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-
 import { getSpecificBlog } from "../../utils/blogapi";
-import "./blog.css";
+import "./common.css";
 import CommentPage from "../comment/Comment";
 import Loading from "../loader/Loader";
 import { AuthorDetails } from "../Extra-Page/AuthorDetails";
 import { Seo } from "../Seo";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function formattedDate(date: any) {
   return new Date(date).toLocaleDateString("en-US", {
@@ -74,7 +75,13 @@ const SpecificBlog = ({ slug }: any) => {
               </div>
               <div className="content">
                 <div className="main-content">
-                  <p>{apidata?.content}</p>
+                  <ReactQuill
+                    value={apidata?.content}
+                    theme="snow"
+                    modules={{ toolbar: false }}
+                    bounds="#root"
+                    readOnly={true}
+                  />
                 </div>
                 {apidata?.image && (
                   <Image
@@ -85,9 +92,7 @@ const SpecificBlog = ({ slug }: any) => {
                     className="mx-auto mb-1"
                   />
                 )}
-                <div className="main-content">
-                  <p>{apidata?.content}</p>
-                </div>
+
                 <div className="mb-4">
                   <AuthorDetails
                     name={apidata?.author?.username!}

@@ -45,7 +45,7 @@ const SignIn = () => {
         })
       );
       SetCookie(apidata.token);
-      router.push("/");
+      router.push(`/dashboard/${apidata.user.username}`);
     } else {
       toast.error(apidata.response?.data?.error || "Something went wrong");
     }

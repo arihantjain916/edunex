@@ -30,9 +30,9 @@ const DashboardPage = (props: Props) => {
 
     if (props.username !== username) {
       console.log("You are not authorized to access this page");
-      //   router.push("/404")
+      router.push("/unauthorized");
     }
-  }, [props.username, isAuthenticated, router, username]);
+  }, [props.username, isAuthenticated, username]);
 
   return <>{renderDashboard(role)}</>;
 };

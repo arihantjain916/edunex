@@ -14,8 +14,9 @@ export const authSlice = createSlice({
     saveBlog: (state, action) => {
       state.posts.push(action.payload);
     },
-    deleteBlog: (state, action) => {
-      state.posts = state.posts.filter((post) => post.id !== action.payload);
+    deleteBlog: (state) => {
+      // state.posts = state.posts.filter((post) => post.id !== action.payload);
+      state.posts = []
     },
     updateBlog: (state, action) => {
       const { postId, updatedContent } = action.payload;
