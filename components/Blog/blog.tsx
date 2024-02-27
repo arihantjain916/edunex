@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { getAllBlogData } from "../../utils/blogapi";
-import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
 import "react-quill/dist/quill.snow.css";
 import { Skeleton } from "@/components/ui/skeleton";
 import "./blog.css";

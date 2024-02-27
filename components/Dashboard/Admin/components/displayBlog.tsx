@@ -5,7 +5,8 @@ import { getBlogbyUsername } from "@/utils/blogapi";
 import Loader from "@/components/loader/Loader";
 import { useRouter } from "next/navigation";
 import { saveBlog } from "@/redux/features/blog";
-import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
 import "react-quill/dist/quill.snow.css";
 
 export interface Blog {

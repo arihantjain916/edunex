@@ -8,7 +8,8 @@ import CommentPage from "../comment/Comment";
 import Loading from "../loader/Loader";
 import { AuthorDetails } from "../Extra-Page/AuthorDetails";
 import { Seo } from "../Seo";
-import ReactQuill from "react-quill";
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
 import "react-quill/dist/quill.snow.css";
 
 function formattedDate(date: any) {
