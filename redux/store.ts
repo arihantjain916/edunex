@@ -33,14 +33,19 @@ const storage =
   typeof window !== "undefined"
     ? createWebStorage("local")
     : createNoopStorage();
-const persistConfig = {
-  key: "root",
+const authpersistConfig = {
+  key: "auth",
+  storage,
+  version: 1,
+};
+const blogpersistConfig = {
+  key: "blog",
   storage,
   version: 1,
 };
 
-const AuthReducer = persistReducer(persistConfig, authReducer);
-const BlogReducer = persistReducer(persistConfig, blogReducer);
+const AuthReducer = persistReducer(authpersistConfig, authReducer);
+const BlogReducer = persistReducer(blogpersistConfig, blogReducer);
 
 export const store = configureStore({
   reducer: {

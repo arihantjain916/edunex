@@ -16,7 +16,7 @@ export const authSlice = createSlice({
     },
     deleteBlog: (state) => {
       // state.posts = state.posts.filter((post) => post.id !== action.payload);
-      state.posts = []
+      state.posts = [];
     },
     updateBlog: (state, action) => {
       const { postId, updatedContent } = action.payload;
@@ -25,8 +25,12 @@ export const authSlice = createSlice({
         postToUpdate.content = updatedContent;
       }
     },
+    defaultBlog: (state) => {
+      state.posts = [];
+    },
   },
 });
 
-export const { saveBlog, deleteBlog, updateBlog } = authSlice.actions;
+export const { saveBlog, deleteBlog, updateBlog, defaultBlog } =
+  authSlice.actions;
 export default authSlice.reducer;

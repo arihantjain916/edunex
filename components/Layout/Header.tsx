@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { RootState } from "@/redux/store";
 import { logout } from "@/redux/features/auth";
+import {defaultBlog} from "@/redux/features/blog"
 import { useSelector, useDispatch } from "react-redux";
 import { Navbar, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import {
@@ -59,6 +60,7 @@ export const Header = () => {
 
   const onLogout = () => {
     dispatch(logout());
+    dispatch(defaultBlog());
     router.push("/");
   };
 

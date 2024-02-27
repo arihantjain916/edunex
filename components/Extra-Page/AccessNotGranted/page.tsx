@@ -1,3 +1,5 @@
+import "./index.css";
+
 const UnauthorizedPage = () => {
   return (
     <div className="flex justify-center items-center h-screen">

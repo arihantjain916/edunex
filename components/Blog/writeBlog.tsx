@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBlog } from "@/redux/features/blog";
-import dynamic from 'next/dynamic';
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
+import dynamic from "next/dynamic";
+import { updateSpecificlog, getSpecificBlog } from "@/utils/blogapi";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { updateSpecificlog } from "@/utils/blogapi";
 
 const formats = [
   "header",
@@ -41,37 +42,38 @@ const modules = {
 const WriteBlog = (props: any) => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state: any) => state.blog);
-  const [textBoxValue, setTextBoxValue] = useState("");
-  const [savedContent, setSavedContent] = useState<any>(null);
+  const [updatedContent, setUpdatedContent] = useState("");
 
   useEffect(() => {
     const specificPost = posts.find((post: any) => post.id === props.blogId);
-    setSavedContent(specificPost);
-    setTextBoxValue(specificPost?.content || "");
-  }, [posts, props.blogId]);
+    setUpdatedContent(specificPost.content || "");
+  }, [props.blogId, posts]);
 
-  const handleSaveClick = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-    dispatch(
-      updateBlog({ postId: props.blogId, updatedContent: textBoxValue })
-    );
+  const handleSaveClick = () => {
+    dispatch(updateBlog({ postId: props.blogId, updatedContent }));
   };
 
   const handleEditorChange = (newContent: string) => {
-    setTextBoxValue(newContent);
+    setUpdatedContent(newContent);
   };
 
-  const handleSave = async() => {
-    console.log(textBoxValue);
-    console.log(props.blogId);
-    const data = {
-      content: textBoxValue
+  const handlePublish = async () => {
+    try {
+      const response = await updateSpecificlog(props.blogId, updatedContent);
+      if (response.success) {
+        alert("Blog Updated Successfully");
+        dispatch(
+          updateBlog({
+            postId: props.blogId,
+            updatedContent: response.data.content,
+          })
+        );
+      }
+    } catch (error) {
+      console.error("Error updating specific blog:", error);
     }
-    const response = await updateSpecificlog(props.blogId, textBoxValue);
-    console.log(response.success);
   };
+
   return (
     <div>
       <ReactQuill
@@ -79,14 +81,13 @@ const WriteBlog = (props: any) => {
         onChange={handleEditorChange}
         modules={modules}
         formats={formats}
-        value={textBoxValue}
+        value={updatedContent}
         bounds="#root"
         placeholder="Write Something"
       />
-
       <button onClick={handleSaveClick}>Update</button>
       <br />
-      <button type="submit" onClick={handleSave}>
+      <button type="submit" onClick={handlePublish}>
         Publish
       </button>
     </div>
