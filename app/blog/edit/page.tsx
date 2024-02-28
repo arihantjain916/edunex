@@ -1,6 +1,6 @@
 "use client";
 
-import WriteBlog from "@/components/Blog/writeBlog";
+import WriteBlog from "../../../components/InputBlog/main";
 import { useSearchParams } from "next/navigation";
 
 export default function BlogEdit() {

@@ -13,7 +13,7 @@ function getCookie() {
 
 export const getAllBlogData = async () => {
   try {
-    const response = await axios.get(`${API}/blog/all/`);
+    const response = await axios.get(`${API}/blog/all`);
     return response.data;
   } catch (error) {
     return error;
@@ -29,12 +29,37 @@ export const getSpecificBlog = async (slug: string) => {
   }
 };
 
-export const updateSpecificlog = async (id: string, content: any) => {
+export const sendBlogtoAPI = async (props: any) => {
+  console.log(props);
+
+  try {
+    const token = getCookie();
+    const response = await axios.post(
+      `${API}/blog/add`,
+      { title: props.title, tag: "random", content: props.content },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const updateSpecificlog = async (
+  id: string,
+  title: string,
+  content: any
+) => {
   try {
     const token = getCookie();
     const response = await axios.patch(
       `${API}/blog/update/${id}`,
-      { content: content },
+      { title: title, tag: "random", content: content },
       {
         headers: {
           Authorization: `Bearer ${token}`,
