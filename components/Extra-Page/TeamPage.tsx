@@ -1,4 +1,4 @@
-import { LinkedinIcon, GithubIcon, TwitterIcon } from "../../utils/SVGicon";
+import { LinkedinIcon, GithubIcon, TwitterIcon } from "../../utils/SVGIcon";
 
 export interface Team {
   name: string;
