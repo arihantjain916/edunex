@@ -43,12 +43,19 @@ const WriteBlog = (props: any) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { posts } = useSelector((state: any) => state.blog);
+  const { role, username } = useSelector((state: any) => state.auth);
   const [updatedContent, setUpdatedContent] = useState("");
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [isNew, setIsNew] = useState(true);
 
   useEffect(() => {
+    if (role !== "ADMIN") {
+      router.push("/unauthorized");
+    }
     const specificPost = posts.find((post: any) => post.id === props.blogId);
+    if (username !== specificPost?.author?.username) {
+      router.push("/unauthorized");
+    }
     if (!specificPost) {
       dispatch(
         saveBlog({
