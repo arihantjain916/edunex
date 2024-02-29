@@ -47,15 +47,13 @@ const WriteBlog = (props: any) => {
   const [updatedContent, setUpdatedContent] = useState("");
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [isNew, setIsNew] = useState(true);
+  let specificPost: any;
 
   useEffect(() => {
     if (role !== "ADMIN") {
       router.push("/unauthorized");
     }
-    const specificPost = posts.find((post: any) => post.id === props.blogId);
-    if (username !== specificPost?.author?.username) {
-      router.push("/unauthorized");
-    }
+    specificPost = posts.find((post: any) => post.id === props.blogId);
     if (!specificPost) {
       dispatch(
         saveBlog({
@@ -63,6 +61,7 @@ const WriteBlog = (props: any) => {
           title: "",
           content: "",
           isNew: true,
+          author: { username: "", role: "" },
         })
       );
       setIsNew(true);
@@ -80,6 +79,7 @@ const WriteBlog = (props: any) => {
         updateTitle: updatedTitle,
         updatedContent: updatedContent,
         isNew: isNew,
+        author: { username: specificPost?.author?.username, role: "" },
       })
     );
   };
@@ -130,7 +130,7 @@ const WriteBlog = (props: any) => {
               updatedTitle: response.data.title,
             })
           );
-          router.push(`/blog/slug/${response.data.slug}`);
+          router.push(`/blog/${response.data.slug}`);
         }
       }
     } catch (error) {
