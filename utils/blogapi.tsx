@@ -90,3 +90,16 @@ export const getBlogbyCategory = async (tag: string) => {
     return error;
   }
 };
+
+export const blogAnalytics = async () => {
+  try {
+    const response = await axios.get(`${API}/blog/analytics`, {
+      headers: {
+        Authorization: `Bearer ${getCookie()}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};

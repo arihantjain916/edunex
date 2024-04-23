@@ -28,13 +28,26 @@ export const sendDataToCommentApi = async (slug: string, comment: string) => {
     );
     return response.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 
 export const getAllComment = async (slug: string) => {
   try {
     const response = await axios.get(`${API}/comment/get/${slug}`);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getAllCommentofUser = async () => {
+  try {
+    const response = await axios.get(`${API}/comment/get-all-comment`, {
+      headers: {
+        Authorization: `Bearer ${getCookie()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     return error;
