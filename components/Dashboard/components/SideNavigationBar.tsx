@@ -13,8 +13,17 @@ import {
 import { CgProfile } from "react-icons/cg";
 import { FaRegComments } from "react-icons/fa";
 import { BiMessageSquareDots } from "react-icons/bi";
+import { logout } from "@/redux/features/auth";
+import { useDispatch } from "react-redux";
+import {useRouter} from "next/navigation"
 
 const SideNavbar = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  function handleLogout(){
+    dispatch(logout())
+    router.push("/auth/login")
+  };
   return (
     <div>
       <Disclosure as="nav">
@@ -87,7 +96,13 @@ const SideNavbar = () => {
               <div className="flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200  hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <MdOutlineLogout className="text-2xl text-gray-600 group-hover:text-white " />
                 <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Logout
+                  <button
+                    onClick={() => {
+                      handleLogout()
+                    }}
+                  >
+                    Logout
+                  </button>
                 </h3>
               </div>
             </div>
