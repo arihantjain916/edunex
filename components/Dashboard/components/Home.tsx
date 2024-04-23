@@ -10,10 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export type commentData = {
   message: string;
-  data: {
-    comment: string;
-    publishedAt: string;
-  };
+  data: commentType[];
   success: boolean;
   totalComment: number;
 };
