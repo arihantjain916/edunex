@@ -20,7 +20,7 @@ export default function BarChart({}: Props) {
       useAnalytics(response.data);
     };
     fetchData();
-  });
+  },[]);
   return (
     <ResponsiveContainer width={"100%"} height={350}>
       <BarGraph data={analytics}>

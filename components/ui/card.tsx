@@ -6,7 +6,7 @@ export type CardProps = {
   label: string;
   icon: LucideIcon;
   comment: string;
-  discription: string;
+  discription?: string;
 };
 
 export default function Card(props: CardProps) {

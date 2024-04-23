@@ -6,50 +6,7 @@ import Card, { CardContent, CardProps } from "@/components/ui/card";
 import BarChart from "@/components/ui/barchart";
 import SalesCard, { SalesProps } from "@/components/ui/salescard";
 import { getAllCommentofUser } from "@/utils/commentapi";
-import { useEffect, useState } from "react";
-
-const cardData: CardProps[] = [
-  {
-    label: "Total Comment",
-    comment: "10",
-    discription: "+20.1% from last month",
-    icon: MessageCircle,
-  },
-  {
-    label: "Total Blog Posted",
-    comment: "10",
-    discription: "+20.1% from last month",
-    icon: Rss,
-  },
-];
-
-// const uesrSalesData: SalesProps[] = [
-//   {
-//     name: "Olivia Martin",
-//     email: "olivia.martin@email.com",
-//     saleAmount: "+$1,999.00"
-//   },
-//   {
-//     name: "Jackson Lee",
-//     email: "isabella.nguyen@email.com",
-//     saleAmount: "+$1,999.00"
-//   },
-//   {
-//     name: "Isabella Nguyen",
-//     email: "isabella.nguyen@email.com",
-//     saleAmount: "+$39.00"
-//   },
-//   {
-//     name: "William Kim",
-//     email: "will@email.com",
-//     saleAmount: "+$299.00"
-//   },
-//   {
-//     name: "Sofia Davis",
-//     email: "sofia.davis@email.com",
-//     saleAmount: "+$39.00"
-//   }
-// ];
+import { useCallback, useEffect, useState } from "react";
 
 export type commentData = {
   message: string;
@@ -91,6 +48,20 @@ export default function Home() {
     return formattedDate;
   };
 
+  const cardData: CardProps[] = [
+    {
+      label: "Total Comment",
+      comment: commentData?.totalComment.toString() || "10",
+      icon: MessageCircle,
+    },
+    {
+      label: "Total Blog Posted",
+      comment: "10",
+      discription: "+20.1% from last month",
+      icon: Rss,
+    },
+  ];
+
   return (
     <div className="flex flex-col gap-5  w-full">
       <PageTitle title="Dashboard" />
@@ -108,14 +79,13 @@ export default function Home() {
       <section className="grid grid-cols-1  gap-4 transition-all lg:grid-cols-2">
         <CardContent>
           <p className="p-4 font-semibold">Overview</p>
-
           <BarChart />
         </CardContent>
         <CardContent className="flex justify-between gap-4">
           <section>
             <p>Recent Comments</p>
             <p className="text-sm text-gray-400">
-              {`You made ${commentData?.totalComment} sales this month.`}
+              {`You post total ${commentData?.totalComment} comment.`}
             </p>
           </section>
           {commentData?.data?.map((d: any, i: any) => (
@@ -126,8 +96,6 @@ export default function Home() {
             />
           ))}
         </CardContent>
-
-        {/*  */}
       </section>
     </div>
   );
