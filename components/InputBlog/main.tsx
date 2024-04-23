@@ -145,6 +145,7 @@ const WriteBlog = (props: any) => {
           type="text"
           value={updatedTitle}
           onChange={(e) => setUpdatedTitle(e.target.value)}
+          className="border-2 border-black"
         />
       </div>
       <ReactQuill

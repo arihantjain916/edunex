@@ -5,8 +5,8 @@ import { getBlogbyUsername } from "@/utils/blogapi";
 import Loader from "@/components/loader/Loader";
 import { useRouter } from "next/navigation";
 import { saveBlog } from "@/redux/features/blog";
-import dynamic from 'next/dynamic';
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
 export interface Blog {
@@ -15,7 +15,7 @@ export interface Blog {
   content: string;
 }
 
-const DisplayBlog = () => {
+export const DisplayBlog = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -57,7 +57,6 @@ const DisplayBlog = () => {
   }
   return (
     <>
-    <h1>Admin Dashboard</h1>
       <div>Your Blogs</div>
       {blogs.length === 0 ? (
         <div>Blog not found</div>
@@ -80,4 +79,22 @@ const DisplayBlog = () => {
   );
 };
 
-export default DisplayBlog;
+
+export const AddBlog = () => {
+  const router = useRouter();
+  const BlogId = Date.now();
+  function handleClick() {
+    router.push(`/blog/edit?id=${BlogId}`);
+  }
+  return (
+    <>
+      <button
+        onClick={handleClick}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Want to post blog??
+      </button>
+    </>
+  );
+};
+

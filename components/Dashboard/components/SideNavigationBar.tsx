@@ -1,114 +1,101 @@
-import { CheckCurrentPath } from "../../../utils/checkCurrentPath";
-import Link from "next/link";
-import { cx } from "@/utils/filterClass";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/redux/store";
-import { logout } from "@/redux/features/auth";
-import { useRouter } from "next/navigation";
+"use client";
+
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Disclosure } from "@headlessui/react";
 import {
-  HomeIcon,
-  BlogIcon,
-  UpdateProfileIcon,
-  ThreedotIcon,
-} from "../../../utils/SVGIcon";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  MdOutlineSpaceDashboard,
+  MdOutlineAnalytics,
+  MdOutlineIntegrationInstructions,
+  MdOutlineMoreHoriz,
+  MdOutlineSettings,
+  MdOutlineLogout,
+} from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { FaRegComments } from "react-icons/fa";
+import { BiMessageSquareDots } from "react-icons/bi";
 
-const SideNavigationBar = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const email = useSelector((state: RootState) => state.auth.email);
-
-  function LogoutClick() {
-    dispatch(logout());
-    router.push("/");
-  }
-
+const SideNavbar = () => {
   return (
-    <aside
-      id="sidebar"
-      className="fixed left-0 top-0 z-40 h-screen w-64 transition-transform bg-white dark:bg-slate-900"
-      aria-label="Sidebar"
-    >
-      <div className="flex h-full flex-col overflow-y-auto border-r border-slate-200 px-3 py-4 dark:border-slate-700">
-        <Link
-          href="#"
-          className="mb-10 flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white"
-        >
-          <span className="ml-3 text-2xl font-bold">EduNex</span>
-        </Link>
-        <ul className="space-y-2 text-sm font-medium">
-          <li>
-            <Link
-              href="#"
-              className={cx(
-                "flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white hover:bg-gray-300",
-                CheckCurrentPath("/dashboard/Arihant1234")
-                  ? "bg-gray-300"
-                  : "dark:bg-slate-700"
-              )}
-            >
-              <HomeIcon />
-              <span className="ml-3 flex-1 whitespace-nowrap">Home</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#"
-              className={cx(
-                "flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white hover:bg-gray-300",
-                CheckCurrentPath("/dashboard/Blog")
-                  ? "bg-gray-300"
-                  : "dark:bg-slate-700"
-              )}
-            >
-              <BlogIcon />
-              <span className="ml-3 flex-1 whitespace-nowrap">Blog</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="#"
-              className={cx(
-                "flex items-center rounded-lg px-3 py-2 text-slate-900 dark:text-white hover:bg-gray-300",
-                CheckCurrentPath("/dashboard/Blog")
-                  ? "bg-gray-300"
-                  : "dark:bg-slate-700"
-              )}
-            >
-              <UpdateProfileIcon />
-              <span className="ml-3 flex-1 whitespace-nowrap">
-                Update Profile
-              </span>
-            </Link>
-          </li>
-          {/* Add more menu items as needed */}
-        </ul>
-        <div className="mt-auto flex overflow-x-hidden">
-          <div className="flex w-full justify-between">
-            <span className="text-sm font-medium text-black dark:text-white">
-              {email}
-            </span>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <ThreedotIcon />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <button onClick={LogoutClick}>Logout</button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+    <div>
+      <Disclosure as="nav">
+        <Disclosure.Button className="absolute top-4 right-4 inline-flex items-center peer justify-center rounded-md p-2 text-gray-800 hover:bg-gray-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white group">
+          <GiHamburgerMenu
+            className="block md:hidden h-6 w-6"
+            aria-hidden="true"
+          />
+        </Disclosure.Button>
+        <div className="p-6 w-1/2 h-screen bg-white z-20 fixed top-0 -left-96 lg:left-0 lg:w-60  peer-focus:left-0 peer:transition ease-out delay-150 duration-200">
+          <div className="flex flex-col justify-start item-center">
+            <h1 className="text-base text-center cursor-pointer font-bold text-blue-900 border-b border-gray-100 pb-4 w-full">
+              Virtual Dashboard
+            </h1>
+            <div className=" my-4 border-b border-gray-100 pb-4">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <MdOutlineSpaceDashboard className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Dashboard
+                </h3>
+              </div>
+              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <CgProfile className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Profile
+                </h3>
+              </div>
+              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <FaRegComments className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Comments
+                </h3>
+              </div>
+              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <MdOutlineAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Analytics
+                </h3>
+              </div>
+              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <BiMessageSquareDots className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Messages
+                </h3>
+              </div>
+              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <MdOutlineIntegrationInstructions className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Integration
+                </h3>
+              </div>
+            </div>
+            {/* setting  */}
+            <div className=" my-4 border-b border-gray-100 pb-4">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <MdOutlineSettings className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Settings
+                </h3>
+              </div>
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <MdOutlineMoreHoriz className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  More
+                </h3>
+              </div>
+            </div>
+            {/* logout */}
+            <div className=" my-4">
+              <div className="flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200  hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                <MdOutlineLogout className="text-2xl text-gray-600 group-hover:text-white " />
+                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                  Logout
+                </h3>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </Disclosure>
+    </div>
   );
 };
 
-export default SideNavigationBar;
+export default SideNavbar;
