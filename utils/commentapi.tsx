@@ -53,3 +53,16 @@ export const getAllCommentofUser = async () => {
     return error;
   }
 };
+
+export const getBlogCommentData = async () => {
+  try {
+    const response = await axios.get(`${API}/comment/all-comment`, {
+      headers: {
+        Authorization: `Bearer ${getCookie()}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
