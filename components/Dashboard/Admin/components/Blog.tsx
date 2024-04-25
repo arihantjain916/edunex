@@ -8,11 +8,13 @@ import { saveBlog } from "@/redux/features/blog";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
+import Link from "next/link";
 
 export interface Blog {
   id: string;
   title: string;
   content: string;
+  slug: string;
 }
 
 export const DisplayBlog = () => {
@@ -20,7 +22,7 @@ export const DisplayBlog = () => {
   const dispatch = useDispatch();
 
   const { username } = useSelector((state: any) => state.auth);
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -57,28 +59,48 @@ export const DisplayBlog = () => {
   }
   return (
     <>
-      <div>Your Blogs</div>
+      <div>
+        <h1 className="text-2xl font-bold my-4 text-center">Your Blogs</h1>
+      </div>
       {blogs.length === 0 ? (
         <div>Blog not found</div>
       ) : (
-        blogs.map((blog: Blog) => (
-          <div key={blog.id}>
-            <h1>{blog.title}</h1>
-            <ReactQuill
-              value={blog.content}
-              theme="snow"
-              modules={{ toolbar: false }}
-              bounds="#root"
-              readOnly={true}
-            />
-            <button onClick={() => EditBlog(blog.id)}>Edit</button>
-          </div>
-        ))
+        <>
+          <main className="container mx-auto mt-8">
+            {blogs.map((blog) => (
+              <article className="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 className="text-xl font-bold mb-2">{blog.title}</h2>
+                <p className="text-gray-700 mb-4">
+                  <ReactQuill
+                    value={blog.content}
+                    theme="snow"
+                    modules={{ toolbar: false }}
+                    bounds="#root"
+                    readOnly={true}
+                  />
+                </p>
+                <div className="flex justify-between items-center">
+                  <Link
+                    href={`/blog/${blog.slug}`}
+                    className="text-blue-500 hover:underline"
+                  >
+                    Read more
+                  </Link>
+                  <button
+                    onClick={() => EditBlog(blog.id)}
+                    className="text-gray-500 hover:text-gray-700 border-2 border-gray-500 hover:border-gray-700 px-2 py-1 rounded"
+                  >
+                    Edit
+                  </button>
+                </div>
+              </article>
+            ))}
+          </main>
+        </>
       )}
     </>
   );
 };
-
 
 export const AddBlog = () => {
   const router = useRouter();
@@ -97,4 +119,3 @@ export const AddBlog = () => {
     </>
   );
 };
-

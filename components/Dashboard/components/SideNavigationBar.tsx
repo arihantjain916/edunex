@@ -60,12 +60,14 @@ const SideNavbar = () => {
                 </div>
               </Link>
               {/* Comments Link */}
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <FaRegComments className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Comments
-                </h3>
-              </div>
+              <Link href="/dashboard/comment">
+                <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                  <FaRegComments className="text-2xl text-gray-600 group-hover:text-white " />
+                  <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                    Comments
+                  </h3>
+                </div>
+              </Link>
               {/* Analytics Link */}
               <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                 <MdOutlineAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
@@ -85,20 +87,20 @@ const SideNavbar = () => {
             </div>
             {/* Logout Button */}
           </div>
-        <div className="mt-auto">
-          <div className="flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200  hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-            <MdOutlineLogout className="text-2xl text-gray-600 group-hover:text-white " />
-            <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-              <button
-                onClick={() => {
-                  handleLogout();
-                }}
-              >
-                Logout
-              </button>
-            </h3>
+          <div className="mt-auto">
+            <div className="flex mb-2 justify-start items-center gap-4 pl-5 border border-gray-200  hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+              <MdOutlineLogout className="text-2xl text-gray-600 group-hover:text-white " />
+              <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                <button
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </button>
+              </h3>
+            </div>
           </div>
-        </div>
         </div>
       </Disclosure>
     </div>

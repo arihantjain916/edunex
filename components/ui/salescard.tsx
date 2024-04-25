@@ -12,6 +12,7 @@ import React from "react";
 export type SalesProps = {
   comment: string;
   publishedAt: string;
+  blog: string
 };
 
 export default function SalesCard(props: SalesProps) {
@@ -20,7 +21,7 @@ export default function SalesCard(props: SalesProps) {
       <section className="flex justify-between gap-3 ">
         <div className="text-sm">
             <p>{props.comment}</p>
-           
+           <p className="text-gray-400 text-sm">{props.blog}</p>
         </div>
       </section>
         <p>{props.publishedAt}</p>

@@ -6,7 +6,9 @@ import Card, { CardContent, CardProps } from "@/components/ui/card";
 import BarChart from "@/components/ui/barchart";
 import SalesCard, { SalesProps } from "@/components/ui/salescard";
 import { getAllCommentofUser } from "@/utils/commentapi";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export type commentData = {
   message: string;
@@ -20,6 +22,9 @@ export type commentType = {
   publishedAt: string;
 };
 export default function Home() {
+  const {posts} = useSelector((state:RootState)=>state.blog)
+  console.log(posts);
+  
   const [commentData, usecommentData] = useState<commentData>();
   useEffect(() => {
     const getComment = async () => {
@@ -90,6 +95,7 @@ export default function Home() {
               key={i}
               comment={d.comment}
               publishedAt={formattedDate(d.publishedAt)}
+              blog={d.blog.title}
             />
           ))}
         </CardContent>

@@ -122,13 +122,16 @@ export const Header = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <button
-                  onClick={() => {
-                    onLogout();
-                  }}
-                >
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
-                </button>
+
+                <DropdownMenuItem>
+                  <button
+                    onClick={() => {
+                      onLogout();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

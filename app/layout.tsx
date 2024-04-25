@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Providers } from "./provider";
 import ReduxProvider from "../redux/provider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "./globals.css";
 
@@ -18,6 +19,7 @@ export default function RootLayout({
     <>
       <html lang="en">
         <body>
+          <SpeedInsights />
           <Providers>
             <ReduxProvider>{children}</ReduxProvider>
           </Providers>
