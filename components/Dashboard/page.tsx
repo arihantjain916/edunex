@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import AdminDashboard from "./Admin/page";
 import UserDashboard from "./User/page";
-
+import { RootState } from "@/redux/store";
 export interface Props {
   username: string;
 }
@@ -20,7 +20,7 @@ const renderDashboard = (role: string) => {
 const DashboardPage = (props: Props) => {
   const router = useRouter();
   const { username, isAuthenticated, role } = useSelector(
-    (state: any) => state.auth
+    (state: RootState) => state.auth
   );
 
   useEffect(() => {
@@ -29,7 +29,6 @@ const DashboardPage = (props: Props) => {
     }
 
     if (props.username !== username) {
-      console.log("You are not authorized to access this page");
       router.push("/unauthorized");
     }
   }, [props.username, isAuthenticated, username]);
