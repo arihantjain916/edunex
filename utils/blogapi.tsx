@@ -30,8 +30,6 @@ export const getSpecificBlog = async (slug: string) => {
 };
 
 export const sendBlogtoAPI = async (props: any) => {
-  console.log(props);
-
   try {
     const token = getCookie();
     const response = await axios.post(

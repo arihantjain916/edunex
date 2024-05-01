@@ -22,9 +22,8 @@ export type commentType = {
   publishedAt: string;
 };
 export default function Home() {
-  const {posts} = useSelector((state:RootState)=>state.blog)
-  console.log(posts);
-  
+  const { posts } = useSelector((state: RootState) => state.blog);
+
   const [commentData, usecommentData] = useState<commentData>();
   useEffect(() => {
     const getComment = async () => {

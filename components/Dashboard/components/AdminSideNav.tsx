@@ -5,7 +5,7 @@ import {
   MdDashboard,
   MdOutlineSettings,
   MdOutlineLogout,
-  MdOutlineQuiz 
+  MdOutlineQuiz,
 } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaComments } from "react-icons/fa";
@@ -71,9 +71,17 @@ const AdminSideNavbar = () => {
               {/* Analytics Link */}
               <Link href="/dashboard/quiz">
                 <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <MdOutlineQuiz  className="text-2xl text-gray-600 group-hover:text-white " />
+                  <MdOutlineQuiz className="text-2xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                     Quiz
+                  </h3>
+                </div>
+              </Link>
+              <Link href="/dashboard/exams">
+                <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                  <MdOutlineQuiz className="text-2xl text-gray-600 group-hover:text-white " />
+                  <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                    Exam
                   </h3>
                 </div>
               </Link>
