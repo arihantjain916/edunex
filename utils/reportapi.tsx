@@ -13,15 +13,11 @@ function getCookie() {
 
 export const addReport = async (data: any) => {
   try {
-    const response = await axios.post(
-      `${API}/report/add`,
-      {
-        headers: {
-          Authorization: `Bearer ${getCookie()}`,
-        },
+    const response = await axios.post(`${API}/report/add`, data, {
+      headers: {
+        Authorization: `Bearer ${getCookie()}`,
       },
-      data
-    );
+    });
     return response.data;
   } catch (error) {
     return error;

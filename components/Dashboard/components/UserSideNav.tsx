@@ -13,6 +13,7 @@ import { logout } from "@/redux/features/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { QuizIcon } from "@/utils/SVGIcon";
 import { RootState } from "@/redux/store";
 
 const UserSideNav = () => {
@@ -51,7 +52,7 @@ const UserSideNav = () => {
                 </div>
               </Link>
               {/* Blog Link */}
-              <Link href="/dashboard/blog">
+              <Link href="/blog">
                 <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
                   <CgProfile className="text-2xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
@@ -60,21 +61,23 @@ const UserSideNav = () => {
                 </div>
               </Link>
               {/* Comments Link */}
-              <Link href="/dashboard/comment">
+              <Link href="/dashboard/quiz">
                 <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <FaComments className="text-2xl text-gray-600 group-hover:text-white " />
+                  <QuizIcon style="text-2xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                    Comments
+                    Quiz
                   </h3>
                 </div>
               </Link>
               {/* Analytics Link */}
-              <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                <MdOutlineAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
-                <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
-                  Analytics
-                </h3>
-              </div>
+              <Link href="/dashboard/user-report">
+                <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                  <MdOutlineAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
+                  <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                    Analytics
+                  </h3>
+                </div>
+              </Link>
             </div>
             {/* Settings Link */}
             <div className="border-b border-gray-100 pb-4">

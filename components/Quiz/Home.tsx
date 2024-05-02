@@ -4,8 +4,10 @@ import { Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { getAllExam } from "@/utils/examapi";
 import PageTitle from "../Layout/pageTitle";
+import { useRouter } from "next/navigation";
 
 type QuizProps = {
+  id: any;
   name: string;
   category: string;
   totalMarks: string;
@@ -15,6 +17,7 @@ type QuizProps = {
 
 const QuizPage = () => {
   const [exams, setExams] = useState<QuizProps[]>([]);
+  const router = useRouter();
 
   async function getExam() {
     const res = await getAllExam();
@@ -54,7 +57,7 @@ const QuizPage = () => {
 
               <button
                 className="primary-outlined-btn"
-                // onClick={() => navigate(`/user/write-exam/${exam.id}`)}
+                onClick={() => router.push(`/dashboard/write-exam/${exam.id}`)}
               >
                 Start Exam
               </button>

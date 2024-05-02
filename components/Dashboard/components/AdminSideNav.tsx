@@ -26,7 +26,7 @@ const AdminSideNavbar = () => {
 
   function handleLogout() {
     dispatch(logout());
-    router.replace("/auth/login");
+    router.push("/auth/login");
   }
 
   return (

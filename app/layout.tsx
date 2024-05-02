@@ -4,6 +4,7 @@ import ReduxProvider from "../redux/provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 
+
 import "./globals.css";
 
 export const metadata: Metadata = {

@@ -37,7 +37,7 @@ export const getAllExam = async () => {
   }
 };
 
-export const getExambyId = async (id: string) => {
+export const getExambyId = async (id: String) => {
   try {
     const response = await axios.get(`${API}/exam/get/${id}`, {
       headers: {
