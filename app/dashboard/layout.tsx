@@ -4,6 +4,8 @@ import "@/components/Quiz/cutom.css";
 import "@/components/Quiz/form.css";
 import "@/components/Quiz/textElement.css";
 import "@/components/Quiz/theme.css";
+import "@mantine/core/styles.css";
+
 
 export default function RootLayout({
   children,

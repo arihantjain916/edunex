@@ -28,9 +28,9 @@ export const addReport = async (data: any) => {
   }
 };
 
-export const getAllReport = async () => {
+export const getAllReport = async (data: any) => {
   try {
-    const response = await axios.get(`${API}/report/get`, {
+    const response = await axios.post(`${API}/report/get`, data, {
       headers: {
         Authorization: `Bearer ${getCookie()}`,
       },

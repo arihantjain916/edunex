@@ -2,18 +2,21 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Disclosure } from "@headlessui/react";
 import {
-  MdDashboard,
   MdOutlineSettings,
   MdOutlineLogout,
   MdOutlineQuiz,
+  MdOutlineDashboard,
 } from "react-icons/md";
+import { PiExam } from "react-icons/pi";
+import { TbReportAnalytics } from "react-icons/tb";
+import { FaRegComment } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import { FaComments } from "react-icons/fa";
 import { logout } from "@/redux/features/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { RootState } from "@/redux/store";
+import { QuizIcon } from "@/utils/SVGIcon";
 
 const AdminSideNavbar = () => {
   const dispatch = useDispatch();
@@ -44,7 +47,7 @@ const AdminSideNavbar = () => {
               {/* Dashboard Link */}
               <Link href={`/dashboard/${username}`}>
                 <div className="flex mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <MdDashboard className="text-2xl text-gray-600 group-hover:text-white " />
+                  <MdOutlineDashboard className="text-2xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                     Dashboard
                   </h3>
@@ -62,7 +65,7 @@ const AdminSideNavbar = () => {
               {/* Comments Link */}
               <Link href="/dashboard/comment">
                 <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <FaComments className="text-2xl text-gray-600 group-hover:text-white " />
+                  <FaRegComment className="text-2xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                     Comments
                   </h3>
@@ -71,7 +74,7 @@ const AdminSideNavbar = () => {
               {/* Analytics Link */}
               <Link href="/dashboard/quiz">
                 <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <MdOutlineQuiz className="text-2xl text-gray-600 group-hover:text-white " />
+                  <QuizIcon style="text-2xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                     Quiz
                   </h3>
@@ -79,9 +82,17 @@ const AdminSideNavbar = () => {
               </Link>
               <Link href="/dashboard/exams">
                 <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <MdOutlineQuiz className="text-2xl text-gray-600 group-hover:text-white " />
+                  <PiExam className="text-2xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                     Exam
+                  </h3>
+                </div>
+              </Link>
+              <Link href="/dashboard/report">
+                <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
+                  <TbReportAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
+                  <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
+                    Report
                   </h3>
                 </div>
               </Link>

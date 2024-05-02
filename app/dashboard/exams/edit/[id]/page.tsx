@@ -1,11 +1,14 @@
 import { Seo } from "@/components/Seo";
 import AddExam from "@/components/Quiz/AddExam";
 
-export default function AddExamPage() {
+type Props = {
+  params: { id: string };
+};
+export default function AddExamPage({ params }: Props) {
   return (
     <>
       <Seo title="Exam" description="Exams" />
-      <AddExam />
+      <AddExam id={params.id} />
     </>
   );
 }

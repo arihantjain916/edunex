@@ -2,22 +2,18 @@
 
 import { Col, Form, message, Row, Select, Table } from "antd";
 import { useEffect, useState } from "react";
-import {
-  addExam,
-  deleteQuestion,
-  editQuestion,
-  updateExam,
-  getExambyId,
-} from "@/utils/examapi";
+import { addExam, updateExam, getExambyId } from "@/utils/examapi";
 import AddEditQues from "./AddEditQues";
 import PageTitle from "../ui/pagetitle";
 import { useRouter } from "next/navigation";
 import { Tabs } from "antd";
 const { TabPane } = Tabs;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 type ExamProps = {
   id?: string;
-  questions: any;
+  question: any;
 };
 
 const AddExam = (props: any) => {
@@ -110,19 +106,31 @@ const AddExam = (props: any) => {
       dataIndex: "action",
       render: (text: any, record: any) => (
         <div className="flex gap-2">
-          <i
-            className="ri-pencil-line"
+          <div
             onClick={() => {
               setSelectedQuestion(record);
               setshowAddEditQuestion(true);
             }}
-          ></i>
-          <i
-            className="ri-delete-bin-line"
+          >
+            <FontAwesomeIcon
+              icon={faPencil}
+              width={20}
+              height={20}
+              className="text-red-600"
+            />
+          </div>
+          <div
             onClick={() => {
               deleteQuestion(record.id);
             }}
-          ></i>
+          >
+            <FontAwesomeIcon
+              icon={faTrash}
+              width={20}
+              height={20}
+              className="text-red-600"
+            />
+          </div>
         </div>
       ),
     },
@@ -199,7 +207,7 @@ const AddExam = (props: any) => {
 
                 <Table
                   columns={questionsColumns}
-                  dataSource={examData?.questions || []}
+                  dataSource={examData?.question || []}
                 />
               </TabPane>
             )}

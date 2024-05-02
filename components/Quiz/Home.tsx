@@ -1,11 +1,9 @@
 "use client";
 
-import { Col, message, Row } from "antd";
+import { Col, Row } from "antd";
 import { useEffect, useState } from "react";
 import { getAllExam } from "@/utils/examapi";
 import PageTitle from "../Layout/pageTitle";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 
 type QuizProps = {
   name: string;
@@ -16,36 +14,28 @@ type QuizProps = {
 };
 
 const QuizPage = () => {
-  const [exams, setExams] = useState<QuizProps[]>([
-    {
-      name: "Arihant",
-      category: "Arihant",
-      totalMarks: "Arihant",
-      duration: "Arihant",
-      passingMarks: "Arihant",
-    },
-  ]);
+  const [exams, setExams] = useState<QuizProps[]>([]);
 
   async function getExam() {
     const res = await getAllExam();
     if (res.success) {
-      setExams(res);
+      setExams(res.data);
     } else {
       console.error(res.response?.data?.error || "Something went wrong");
     }
   }
 
-  if (exams.length === 0) {
-    return (
-      <>
-        <p>Loading...</p>
-      </>
-    );
-  }
+  // if (exams.length === 0) {
+  //   return (
+  //     <>
+  //       <p>Loading...</p>
+  //     </>
+  //   );
+  // }
 
-  // useEffect(() => {
-  //   getExam();
-  // }, []);
+  useEffect(() => {
+    getExam();
+  }, []);
   return (
     <div>
       <PageTitle title={"Quizes"} />

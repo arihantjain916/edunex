@@ -4,6 +4,8 @@ import { deleteExam, getAllExam } from "@/utils/examapi";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { message, Table } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const QuizIndex = () => {
   const router = useRouter();
@@ -53,14 +55,22 @@ const QuizIndex = () => {
       dataIndex: "action",
       render: (text: any, record: any) => (
         <div className="flex gap-2">
-          <i
-            className="ri-pencil-line"
-            onClick={() => router.push(`/admin/exams/edit/${record.id}`)}
-          ></i>
-          <i
-            className="ri-delete-bin-line"
-            onClick={() => deleteExam(record.id)}
-          ></i>
+          <div onClick={() => router.push(`/dashboard/exams/edit/${record.id}`)}>
+            <FontAwesomeIcon
+              icon={faPencil}
+              width={20}
+              height={20}
+              className="text-bg-red-600"
+            />
+          </div>
+          <div onClick={() => deleteExam(record.id)}>
+            <FontAwesomeIcon
+              icon={faTrash}
+              width={20}
+              height={20}
+              className="text-bg-red-600"
+            />
+          </div>
         </div>
       ),
     },

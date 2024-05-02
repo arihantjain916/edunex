@@ -52,17 +52,11 @@ export const getExambyId = async (id: string) => {
 
 export const updateExam = async (id: string, data: any) => {
   try {
-    const response = await axios.patch(
-      `${API}/exam/update/${id}`,
-      {
-        data: data,
+    const response = await axios.patch(`${API}/exam/update/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${getCookie()}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${getCookie()}`,
-        },
-      }
-    );
+    });
     return response.data;
   } catch (error) {
     return error;
