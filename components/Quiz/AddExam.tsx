@@ -15,8 +15,13 @@ import { useRouter } from "next/navigation";
 import { Tabs } from "antd";
 const { TabPane } = Tabs;
 
+type ExamProps = {
+  id?: string;
+  questions: any;
+};
+
 const AddExam = (props: any) => {
-  const [examData, setexamData] = useState(null);
+  const [examData, setexamData] = useState<ExamProps | undefined>(undefined);
   const [showAddEditQuestion, setshowAddEditQuestion] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const router = useRouter();
