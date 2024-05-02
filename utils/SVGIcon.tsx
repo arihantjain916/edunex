@@ -213,8 +213,8 @@ export const QuizIcon = ({ style }: { style: any }) => {
     <Image
       src={"/quiz.png"}
       alt="quiz"
-      width={40}
-      height={40}
+      width={30}
+      height={30}
       className={style}
     />
   );

@@ -82,7 +82,7 @@ const AdminSideNavbar = () => {
               </Link>
               <Link href="/dashboard/exams">
                 <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <PiExam className="text-2xl text-gray-600 group-hover:text-white " />
+                  <PiExam className="text-3xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                     Exam
                   </h3>
@@ -90,7 +90,7 @@ const AdminSideNavbar = () => {
               </Link>
               <Link href="/dashboard/report">
                 <div className="flex  mb-2 justify-start items-center gap-4 pl-5 hover:bg-gray-900 p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto">
-                  <TbReportAnalytics className="text-2xl text-gray-600 group-hover:text-white " />
+                  <TbReportAnalytics className="text-3xl text-gray-600 group-hover:text-white " />
                   <h3 className="text-base text-gray-800 group-hover:text-white font-semibold ">
                     Report
                   </h3>
