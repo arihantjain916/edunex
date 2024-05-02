@@ -2,6 +2,7 @@
 import { Form, message, Modal } from "antd";
 import React from "react";
 import { addQuestion, editQuestion } from "@/utils/examapi";
+import Loading from "@/app/loading";
 
 const AddEditQues = ({
   showAddEditQuestionModal,
@@ -11,6 +12,7 @@ const AddEditQues = ({
   selectedQuestion,
   setSelectedQuestion,
 }: any) => {
+  const [loading, setLoading] = React.useState(false);
   const onFinish = async (values: any) => {
     try {
       const requiredPayload = {
@@ -26,9 +28,13 @@ const AddEditQues = ({
       };
       let response;
       if (selectedQuestion) {
+        setLoading(true);
         response = await editQuestion(selectedQuestion.id, requiredPayload);
+        setLoading(false);
       } else {
+        setLoading(true);
         response = await addQuestion(requiredPayload);
+        setLoading(false);
       }
 
       if (response.success) {
@@ -40,8 +46,18 @@ const AddEditQues = ({
       }
     } catch (error: any) {
       message.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <Modal
       title={selectedQuestion ? "Edit Question" : "Add Question"}
@@ -65,26 +81,26 @@ const AddEditQues = ({
         }}
       >
         <Form.Item name="name" label="Question">
-          <input type="text" />
+          <input id="input" type="text" />
         </Form.Item>
         <Form.Item name="correctOption" label="Correct Option">
-          <input type="text" />
+          <input id="input" type="text" />
         </Form.Item>
 
         <div className="flex gap-3">
           <Form.Item name="A" label="Option A">
-            <input type="text" />
+            <input id="input" type="text" />
           </Form.Item>
           <Form.Item name="B" label="Option B">
-            <input type="text" />
+            <input id="input" type="text" />
           </Form.Item>
         </div>
         <div className="flex gap-3">
           <Form.Item name="C" label="Option C">
-            <input type="text" />
+            <input id="input" type="text" />
           </Form.Item>
           <Form.Item name="D" label="Option D">
-            <input type="text" />
+            <input id="input" type="text" />
           </Form.Item>
         </div>
 

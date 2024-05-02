@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getAllExam } from "@/utils/examapi";
 import PageTitle from "../Layout/pageTitle";
 import { useRouter } from "next/navigation";
+import { truncate } from "fs/promises";
 
 type QuizProps = {
   id: any;
@@ -17,10 +18,13 @@ type QuizProps = {
 
 const QuizPage = () => {
   const [exams, setExams] = useState<QuizProps[]>([]);
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
 
   async function getExam() {
+    setLoading(true)
     const res = await getAllExam();
+    setLoading(false)
     if (res.success) {
       setExams(res.data);
     } else {

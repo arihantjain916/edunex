@@ -10,6 +10,7 @@ import { Tabs } from "antd";
 const { TabPane } = Tabs;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Loading from "@/app/loading";
 
 type ExamProps = {
   id?: string;
@@ -20,15 +21,20 @@ const AddExam = (props: any) => {
   const [examData, setexamData] = useState<ExamProps | undefined>(undefined);
   const [showAddEditQuestion, setshowAddEditQuestion] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const onFinish = async (values: any) => {
     try {
       let response;
       if (props.id) {
+        setLoading(true);
         response = await updateExam(props.id, values);
+        setLoading(false);
       } else {
+        setLoading(true);
         response = await addExam(values);
+        setLoading(false);
       }
       if (response.success) {
         message.success(response.message);
@@ -38,8 +44,18 @@ const AddExam = (props: any) => {
       }
     } catch (error: any) {
       message.error(error?.message);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
+  }
 
   const getExamData = async () => {
     try {
@@ -116,7 +132,7 @@ const AddExam = (props: any) => {
               icon={faPencil}
               width={20}
               height={20}
-              className="text-red-600"
+              className="text-black"
             />
           </div>
           <div
@@ -128,7 +144,7 @@ const AddExam = (props: any) => {
               icon={faTrash}
               width={20}
               height={20}
-              className="text-red-600"
+              className="text-black"
             />
           </div>
         </div>
@@ -147,17 +163,17 @@ const AddExam = (props: any) => {
               <Row gutter={[10, 10]}>
                 <Col span={8}>
                   <Form.Item label="Exam Name" name="name">
-                    <input type="text" />
+                    <input id="input" type="text" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Exam Duration" name="duration">
-                    <input type="number" />
+                    <input id="input" type="number" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Category" name="category">
-                    <select name="" id="">
+                    <select id="select" name="category">
                       <option value="">Select Category</option>
                       <option value="Javascript">Javascript</option>
                       <option value="React">React</option>
@@ -171,12 +187,12 @@ const AddExam = (props: any) => {
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Total Marks" name="totalMarks">
-                    <input type="number" />
+                    <input id="input" type="number" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Passing Marks" name="passingMarks">
-                    <input type="number" />
+                    <input id="input" type="number" />
                   </Form.Item>
                 </Col>
               </Row>

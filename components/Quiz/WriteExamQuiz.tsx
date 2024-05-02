@@ -8,6 +8,7 @@ import Instruction from "./Instruction";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
 // import * as LottiePlayer from "@lottiefiles/lottie-player";
 
 type ExamProp = {
@@ -54,21 +55,28 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
   const [secondsLeft = 0, setSecondsLeft] = useState(0);
   const [timeUp, setTimeUp] = useState(false);
   const [intervalId, setIntervalId] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const getexamData = async () => {
     try {
+      setLoading(true);
       const response = await getExambyId(id);
+      console.log(response);
+
       if (response.success) {
         setExamData(response.data);
         setQuestions(response.data.question);
         setSecondsLeft(response.data.duration);
+        setLoading(false);
       } else {
         message.error(response.response?.data?.error || "Something went wrong");
       }
     } catch (err: any) {
       message.error(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -97,6 +105,8 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
       };
       setResult(tempResult);
 
+      setLoading(true);
+
       const response = await addReport({
         username,
         examId: id,
@@ -106,17 +116,20 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
       if (response.success) {
         message.success("Report added successfully");
         setView("result");
+        setLoading(false);
       } else {
         message.error(response.response?.data?.error || "Something went wrong");
       }
     } catch (err: any) {
       message.error(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const startTimer = () => {
     let totalSeconds = examData.duration;
-    const IntervalId = setInterval(() => {
+    const Intervalid = setInterval(() => {
       if (totalSeconds > 0) {
         totalSeconds = totalSeconds - 1;
         setSecondsLeft(totalSeconds);
@@ -124,7 +137,7 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
         setTimeUp(true);
       }
     }, 1000);
-    setIntervalId(IntervalId);
+    setIntervalId(Intervalid);
   };
 
   useEffect(() => {
@@ -139,6 +152,14 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
       getexamData();
     }
   }, []);
+
+  if(loading){
+    return(
+      <div className="min-h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    )
+  }
 
   return (
     examData && (
@@ -237,20 +258,24 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
         {view === "result" && (
           <div className="flex  items-center mt-2 justify-center result">
             <div className="flex flex-col gap-2">
-              <h1 className="text-2xl">RESULT</h1>
+              <h1 className="text-2xl text-black">RESULT</h1>
               <div className="divider"></div>
               <div className="marks">
-                <h1 className="text-md">Total Marks : {examData.totalMarks}</h1>
-                <h1 className="text-md">
-                  Obtained Marks :{result.correctAnswers.length}
+                <h1 className="text-md text-black">
+                  Total Marks : {examData.totalMarks}
                 </h1>
-                <h1 className="text-md">
-                  Wrong Answers : {result.wrongAnswers.length}
+                <h1 className="text-md text-black">
+                  Obtained Marks :{result?.correctAnswers?.length || 0}
                 </h1>
-                <h1 className="text-md">
+                <h1 className="text-md text-black">
+                  Wrong Answers : {result?.wrongAnswers?.length || 0}
+                </h1>
+                <h1 className="text-md text-black">
                   Passing Marks : {examData.passingMarks}
                 </h1>
-                <h1 className="text-md">VERDICT :{result.verdict}</h1>
+                <h1 className="text-md text-black">
+                  VERDICT :{result.verdict}
+                </h1>
 
                 <div className="flex gap-2 mt-2">
                   <button
@@ -279,7 +304,7 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
               {result.verdict === "Pass" && (
                 <lottie-player
                   src="https://assets2.lottiefiles.com/packages/lf20_ya4ycrti.json"
-                  background="transparent"
+                  // background="transparent"
                   speed="1"
                   loop
                   autoplay
@@ -289,7 +314,7 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
               {result.verdict === "Fail" && (
                 <lottie-player
                   src="https://assets4.lottiefiles.com/packages/lf20_qp1spzqv.json"
-                  background="transparent"
+                  // background="transparent"
                   speed="1"
                   loop
                   autoplay

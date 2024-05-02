@@ -5,6 +5,7 @@ import { message, Table } from "antd";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { getAllReport } from "@/utils/reportapi";
+import Loading from "@/app/loading";
 
 const ReportIndex = () => {
   const [reportData, setReportData] = useState([]);
@@ -12,103 +13,98 @@ const ReportIndex = () => {
     examName: "",
     userName: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const columns = [
     {
       title: "Exam Name",
       dataIndex: "examName",
-      render: (text: any, record: any) => <>{record.exam.name}</>,
+      render: (text: any, record: any) => <>{record?.exam?.name}</>,
     },
     {
-      title: "User Name",
+      title: "UserName",
       dataIndex: "userName",
-      render: (text: any, record: any) => <>{record.user.name}</>,
+      render: (text: any, record: any) => <>{record?.user?.username}</>,
     },
     {
       title: "Date",
       dataIndex: "date",
       render: (text: any, record: any) => (
-        <>{moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss")}</>
+        <>{moment(record?.createdAt).format("DD-MM-YYYY ")}</>
       ),
     },
     {
       title: "Total Marks",
       dataIndex: "totalQuestions",
-      render: (text: any, record: any) => <>{record.exam.totalMarks}</>,
+      render: (text: any, record: any) => <>{record?.exam?.totalMarks}</>,
     },
     {
       title: "Passing Marks",
       dataIndex: "correctAnswers",
-      render: (text: any, record: any) => <>{record.exam.passingMarks}</>,
+      render: (text: any, record: any) => <>{record?.exam?.passingMarks}</>,
     },
     {
       title: "Obtained Marks",
       dataIndex: "correctAnswers",
       render: (text: any, record: any) => (
-        <>{record.result.correctAnswers.length}</>
+        <>{record?.result?.correctAnswer?.length}</>
       ),
     },
     {
       title: "Verdict",
       dataIndex: "verdict",
-      render: (text: any, record: any) => <>{record.result.verdict}</>,
+      render: (text: any, record: any) => <>{record?.result?.verdict}</>,
     },
   ];
 
   const getData = async (tempFilters: any) => {
     try {
-      const respose = await getAllReport(tempFilters);
-      if (respose.success) {
-        setReportData(respose.data);
+      setLoading(true);
+      const response = await getAllReport(tempFilters);
+      if (response.success) {
+        setReportData(response.data);
       } else {
-        message.error(respose.response?.data?.error || "Something went wrong");
+        message.error(response.response?.data?.error || "Something went wrong");
       }
     } catch (error: any) {
       message.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const boll = reportData.length === 0;
   useEffect(() => {
     getData(filters);
-  }, []);
+  }, [filters]);
+
+  const handleClearFilters = () => {
+    setFilters({ examName: "", userName: "" });
+    getData({ examName: "", userName: "" });
+  };
+
   return (
     <div>
       <PageTitle title="Reports" />
       <div className="divider"></div>
       <div className="flex gap-2">
         <input
+          id="input"
           type="text"
-          disabled={boll}
           placeholder="Exam"
           value={filters.examName}
           onChange={(e) => setFilters({ ...filters, examName: e.target.value })}
         />
         <input
-          disabled={boll}
+          id="input"
           type="text"
           placeholder="User"
           value={filters.userName}
           onChange={(e) => setFilters({ ...filters, userName: e.target.value })}
         />
-        <button
-          disabled={boll}
-          className="primary-outlined-btn"
-          onClick={() => {
-            setFilters({
-              examName: "",
-              userName: "",
-            });
-            getData({
-              examName: "",
-              userName: "",
-            });
-          }}
-        >
+        <button className="primary-outlined-btn" onClick={handleClearFilters}>
           Clear
         </button>
         <button
-          disabled={boll}
           className="primary-contained-btn"
           onClick={() => getData(filters)}
         >
@@ -116,6 +112,7 @@ const ReportIndex = () => {
         </button>
       </div>
       <Table columns={columns} dataSource={reportData} className="mt-2" />
+      {loading && <Loading />}
     </div>
   );
 };

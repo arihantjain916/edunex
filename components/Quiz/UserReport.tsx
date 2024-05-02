@@ -1,34 +1,38 @@
 "use client";
-import PageTitle from "../ui/pagetitle";
-import { message, Modal, Table } from "antd";
-import { getUserReport } from "@/utils/reportapi";
-import moment from "moment";
+
 import { useState, useEffect } from "react";
+import { message, Table } from "antd";
+import moment from "moment";
+import Loading from "@/app/loading";
+import PageTitle from "../ui/pagetitle";
+import { getUserReport } from "@/utils/reportapi";
 
 const UserReport = () => {
-  const [reportsData, setReportsData] = useState<any[]>([]);
+  const [reportsData, setReportsData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const columns = [
     {
       title: "Exam Name",
       dataIndex: "examName",
-      render: (text: any, record: any) => <>{record.exam.name}</>,
+      render: (text: any, record: any) => <>{record?.exam?.name}</>,
     },
     {
       title: "Date",
       dataIndex: "date",
       render: (text: any, record: any) => (
-        <>{moment(record.createdAt).format("DD-MM-YYYY hh:mm:ss")}</>
+        <>{moment(record?.createdAt).format("DD-MM-YYYY")}</>
       ),
     },
     {
       title: "Total Marks",
       dataIndex: "totalQuestions",
-      render: (text: any, record: any) => <>{record.exam.totalMarks}</>,
+      render: (text: any, record: any) => <>{record?.exam?.totalMarks}</>,
     },
     {
       title: "Passing Marks",
       dataIndex: "correctAnswers",
-      render: (text: any, record: any) => <>{record.exam.passingMarks}</>,
+      render: (text: any, record: any) => <>{record?.exam?.passingMarks}</>,
     },
     {
       title: "Obtained Marks",
@@ -40,34 +44,55 @@ const UserReport = () => {
     {
       title: "Verdict",
       dataIndex: "verdict",
-      render: (text: any, record: any) => <>{record.result.verdict}</>,
+      render: (text: any, record: any) => <>{record?.result?.verdict}</>,
     },
   ];
 
   const getData = async () => {
     try {
+      setLoading(true);
       const response = await getUserReport();
-      console.log(response.success);
+      console.log("Response from API:", response); // Log the response from the API
       if (response.success) {
-        setReportsData(response);
+        const formattedData = response.data.map(
+          (item: { dateCreated: any; result: { correctAnswer: any } }) => ({
+            ...item,
+            date: item.dateCreated, // Use "dateCreated" key for "date"
+            result: {
+              ...item.result,
+              correctAnswers: item.result.correctAnswer, // Rename "correctAnswer" to "correctAnswers"
+              // No need to change "wrongAnswer" to "wrongAnswers" as it matches the expected key
+            },
+          })
+        );
+        console.log("Formatted Data:", formattedData); // Log the formatted data before updating state
+        setReportsData(formattedData);
       } else {
         message.error(response.message);
       }
-
-      console.log("ReportsData: ", reportsData);
     } catch (error: any) {
+      console.error("Error fetching data:", error); // Log any errors that occur during data fetching
       message.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div>
       <PageTitle title="Reports" />
       <div className="divider"></div>
-      <Table columns={columns} dataSource={reportsData} />
+      {loading ? (
+        <div className="min-h-screen flex justify-center items-center">
+          <Loading />
+        </div>
+      ) : (
+        <Table columns={columns} dataSource={reportsData} />
+      )}
     </div>
   );
 };
