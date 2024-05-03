@@ -3,8 +3,7 @@ import SideNavbar from "@/components/Dashboard/components/SideNavigationBar";
 import "@/components/Quiz/cutom.css";
 import "@/components/Quiz/form.css";
 import "@/components/Quiz/textElement.css";
-// import "@mantine/core/styles.css";
-
+import "@/components/Quiz/theme.css";
 
 export default function RootLayout({
   children,
