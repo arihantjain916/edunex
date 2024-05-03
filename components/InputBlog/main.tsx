@@ -139,13 +139,14 @@ const WriteBlog = (props: any) => {
   };
 
   return (
-    <div>
-      <div className="title">
+    <div className="p-4">
+      <div className="mb-3">
         <input
           type="text"
           value={updatedTitle}
+          placeholder="Insert title here"
           onChange={(e) => setUpdatedTitle(e.target.value)}
-          className="border-2 border-black"
+          className="border-b-0 border-black w-full text-3xl hover:border-b-2 "
         />
       </div>
       <ReactQuill
@@ -156,12 +157,21 @@ const WriteBlog = (props: any) => {
         value={updatedContent}
         bounds="#root"
         placeholder="Write Something"
+        className="w-full h-96 border-2 border-black"
       />
-      <button onClick={handleSaveClick}>Update</button>
-      <br />
-      <button type="submit" onClick={handlePublish}>
-        Publish
-      </button>
+      <div className="flex justify-end gap-2 mt-2">
+        <button onClick={handleSaveClick} className="mt-2 border-2 border-black p-2 ">
+          Update
+        </button>
+        <br />
+        <button
+          type="submit"
+          className="mt-2 bg-blue-500 p-2 text-white"
+          onClick={handlePublish}
+        >
+          Publish
+        </button>
+      </div>
     </div>
   );
 };
