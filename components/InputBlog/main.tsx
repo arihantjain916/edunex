@@ -180,7 +180,7 @@ const WriteBlog = ({ blogId }: { blogId: string }) => {
           </SelectTrigger>
           <SelectContent className="bg-white">
             <SelectItem value="light">Technical</SelectItem>
-            <SelectItem value="dark">Buisness</SelectItem>
+            <SelectItem value="buisness">Buisness</SelectItem>
             <SelectItem value="management">Management</SelectItem>
             <SelectItem value="other">Other</SelectItem>
           </SelectContent>
