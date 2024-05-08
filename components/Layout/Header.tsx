@@ -120,9 +120,16 @@ export const Header = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <button
+                    onClick={() => {
+                      router.push(`/dashboard/${username}`);
+                    }}
+                  >
+                    Profile
+                  </button>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
-
                 <DropdownMenuItem>
                   <button
                     onClick={() => {

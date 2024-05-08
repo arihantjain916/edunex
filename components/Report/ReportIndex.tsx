@@ -81,7 +81,13 @@ const ReportIndex = () => {
     setFilters({ examName: "", userName: "" });
     getData({ examName: "", userName: "" });
   };
-
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <div>
       <PageTitle title="Reports" />
@@ -112,7 +118,6 @@ const ReportIndex = () => {
         </button>
       </div>
       <Table columns={columns} dataSource={reportData} className="mt-2" />
-      {loading && <Loading />}
     </div>
   );
 };

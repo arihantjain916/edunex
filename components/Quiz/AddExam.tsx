@@ -1,83 +1,95 @@
 "use client";
-
 import { Col, Form, message, Row, Select, Table } from "antd";
 import { useEffect, useState } from "react";
-import { addExam, updateExam, getExambyId } from "@/utils/examapi";
+import {
+  addExam,
+  updateExam,
+  getExambyId,
+  deleteQuestion,
+} from "@/utils/examapi";
 import AddEditQues from "./AddEditQues";
 import PageTitle from "../ui/pagetitle";
 import { useRouter } from "next/navigation";
 import { Tabs } from "antd";
-const { TabPane } = Tabs;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/app/loading";
 
+const { TabPane } = Tabs;
 type ExamProps = {
   id?: string;
   question: any;
 };
 
 const AddExam = (props: any) => {
-  const [examData, setexamData] = useState<ExamProps | undefined>(undefined);
-  const [showAddEditQuestion, setshowAddEditQuestion] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [examData, setExamData] = useState<ExamProps | undefined>(undefined);
+  const [showAddEditQuestion, setShowAddEditQuestion] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const onFinish = async (values: any) => {
     try {
-      let response;
-      if (props.id) {
-        setLoading(true);
-        response = await updateExam(props.id, values);
-        setLoading(false);
-      } else {
-        setLoading(true);
-        response = await addExam(values);
-        setLoading(false);
+      const { totalMarks, passingMarks, duration } = values;
+
+      if (passingMarks <= 0 || !passingMarks) {
+        throw new Error("Passing Marks should be greater than 0");
       }
+      if (totalMarks <= 0 || !totalMarks) {
+        throw new Error("Total Marks should be greater than 0");
+      }
+      if (duration <= 0 || !duration) {
+        throw new Error("Exam duration should be greater than 0");
+      }
+
+      if (totalMarks! < passingMarks) {
+        throw new Error("Total Marks should be greater than Passing Marks");
+      }
+
+      setLoading(true);
+      const response = props.id
+        ? await updateExam(props.id, values)
+        : await addExam(values);
+
       if (response.success) {
         message.success(response.message);
-        router.push("/dashboard/exams");
       } else {
-        message.error(response.response?.data?.error || "Something went wrong");
+        throw new Error(
+          response.response?.data?.error || "Something went wrong"
+        );
       }
     } catch (error: any) {
-      message.error(error?.message);
+      message.error(error.message || "An error occurred");
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <Loading />
-      </div>
-    );
-  }
-
   const getExamData = async () => {
     try {
       const response = await getExambyId(props.id);
       if (response.success) {
-        setexamData(response.data);
+        setExamData(response.data);
       } else {
-        message.error(response.response?.data?.error || "Something went wrong");
+        throw new Error(
+          response.response?.data?.error || "Something went wrong"
+        );
       }
     } catch (error: any) {
       message.error(error.message);
     }
   };
 
-  const deleteQuestion = async (quesId: String) => {
+  const deleteQuestionHandler = async (quesId: string) => {
     try {
-      const response: any = await deleteQuestion(quesId);
+      const response = await deleteQuestion(quesId);
       if (response.success) {
         message.success(response.message);
         getExamData();
       } else {
-        message.error(response.response?.data?.error || "Something went wrong");
+        throw new Error(
+          response.response?.data?.error || "Something went wrong"
+        );
       }
     } catch (error: any) {
       message.error(error.message);
@@ -88,7 +100,17 @@ const AddExam = (props: any) => {
     if (props.id) {
       getExamData();
     }
-  }, []);
+  }, [props.id]);
+
+  if (loading) {
+    return (
+      <>
+        <div className="min-h-screen flex justify-center items-center">
+          <Loading />
+        </div>
+      </>
+    );
+  }
 
   const questionsColumns = [
     {
@@ -125,7 +147,7 @@ const AddExam = (props: any) => {
           <div
             onClick={() => {
               setSelectedQuestion(record);
-              setshowAddEditQuestion(true);
+              setShowAddEditQuestion(true);
             }}
           >
             <FontAwesomeIcon
@@ -137,7 +159,7 @@ const AddExam = (props: any) => {
           </div>
           <div
             onClick={() => {
-              deleteQuestion(record.id);
+              deleteQuestionHandler(record.id);
             }}
           >
             <FontAwesomeIcon
@@ -187,12 +209,12 @@ const AddExam = (props: any) => {
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Total Marks" name="totalMarks">
-                    <input id="input" type="number" />
+                    <input id="input" type="number" inputMode="numeric" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Passing Marks" name="passingMarks">
-                    <input id="input" type="number" />
+                    <input id="input" type="number" inputMode="numeric" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -215,7 +237,7 @@ const AddExam = (props: any) => {
                   <button
                     className="primary-outlined-btn"
                     type="button"
-                    onClick={() => setshowAddEditQuestion(true)}
+                    onClick={() => setShowAddEditQuestion(true)}
                   >
                     Add Question
                   </button>
@@ -233,10 +255,10 @@ const AddExam = (props: any) => {
 
       {showAddEditQuestion && (
         <AddEditQues
-          setShowAddEditQuestionModal={setshowAddEditQuestion}
+          setShowAddEditQuestionModal={setShowAddEditQuestion}
           showAddEditQuestionModal={showAddEditQuestion}
           examId={props.id}
-          refreshData={getExamData}
+          refreshData={() => props.id && getExamData()}
           selectedQuestion={selectedQuestion}
           setSelectedQuestion={setSelectedQuestion}
         />

@@ -52,26 +52,25 @@ const UserReport = () => {
     try {
       setLoading(true);
       const response = await getUserReport();
-      console.log("Response from API:", response); // Log the response from the API
+      console.log("Response from API:", response);
       if (response.success) {
         const formattedData = response.data.map(
           (item: { dateCreated: any; result: { correctAnswer: any } }) => ({
             ...item,
-            date: item.dateCreated, // Use "dateCreated" key for "date"
+            date: item.dateCreated,
             result: {
               ...item.result,
-              correctAnswers: item.result.correctAnswer, // Rename "correctAnswer" to "correctAnswers"
-              // No need to change "wrongAnswer" to "wrongAnswers" as it matches the expected key
+              correctAnswers: item.result.correctAnswer,
             },
           })
         );
-        console.log("Formatted Data:", formattedData); // Log the formatted data before updating state
+        console.log("Formatted Data:", formattedData);
         setReportsData(formattedData);
       } else {
         message.error(response.message);
       }
     } catch (error: any) {
-      console.error("Error fetching data:", error); // Log any errors that occur during data fetching
+      console.error("Error fetching data:", error);
       message.error(error.message);
     } finally {
       setLoading(false);
@@ -82,17 +81,18 @@ const UserReport = () => {
     getData();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <div>
       <PageTitle title="Reports" />
       <div className="divider"></div>
-      {loading ? (
-        <div className="min-h-screen flex justify-center items-center">
-          <Loading />
-        </div>
-      ) : (
-        <Table columns={columns} dataSource={reportsData} />
-      )}
+      <Table columns={columns} dataSource={reportsData} />
     </div>
   );
 };
