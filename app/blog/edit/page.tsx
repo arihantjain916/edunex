@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function BlogEdit() {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id: string = searchParams.get("id")!;
 
   return (
     <>

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { register } from "@/redux/features/auth";
-const isBrowser = () => typeof window !== "undefined"; //The approach recommended by Next.js
+const isBrowser = () => typeof window !== "undefined";
 
 function scrollToTop() {
   if (!isBrowser()) return;

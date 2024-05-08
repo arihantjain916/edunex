@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getAllExam } from "@/utils/examapi";
 import PageTitle from "../Layout/pageTitle";
 import { useRouter } from "next/navigation";
-import { truncate } from "fs/promises";
+import Image from "next/image";
 
 type QuizProps = {
   id: any;
@@ -18,13 +18,13 @@ type QuizProps = {
 
 const QuizPage = () => {
   const [exams, setExams] = useState<QuizProps[]>([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function getExam() {
-    setLoading(true)
+    setLoading(true);
     const res = await getAllExam();
-    setLoading(false)
+    setLoading(false);
     if (res.success) {
       setExams(res.data);
     } else {
@@ -32,13 +32,16 @@ const QuizPage = () => {
     }
   }
 
-  // if (exams.length === 0) {
-  //   return (
-  //     <>
-  //       <p>Loading...</p>
-  //     </>
-  //   );
-  // }
+  if (exams.length === 0) {
+    return (
+      <>
+        <div className="h-screen gap-3 p-4 flex justify-center items-center">
+          <Image src="/emptyBox.png" width={70} height={70} alt="Empty Box" />
+          <h2 className="text-2xl font-bold">No Quiz Found</h2>
+        </div>
+      </>
+    );
+  }
 
   useEffect(() => {
     getExam();

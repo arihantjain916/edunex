@@ -1,10 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveBlog, updateBlog, finalUpdate } from "@/redux/features/blog";
-import dynamic from "next/dynamic";
-import { sendBlogtoAPI, updateSpecificlog } from "@/utils/blogapi";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import { message } from "antd";
+import { saveBlog, updateBlog, finalUpdate } from "@/redux/features/blog";
+import { sendBlogtoAPI, updateSpecificlog } from "@/utils/blogapi";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import "./index.css";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -22,6 +33,7 @@ const formats = [
   "bullet",
   "indent",
 ];
+
 const modules = {
   toolbar: [
     [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -39,25 +51,33 @@ const modules = {
   },
 };
 
-const WriteBlog = (props: any) => {
+const WriteBlog = ({ blogId }: { blogId: string }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { posts } = useSelector((state: any) => state.blog);
-  const { role, username } = useSelector((state: any) => state.auth);
+  const { role } = useSelector((state: any) => state.auth);
   const [updatedContent, setUpdatedContent] = useState("");
   const [updatedTitle, setUpdatedTitle] = useState("");
   const [isNew, setIsNew] = useState(true);
-  let specificPost: any;
+  const [image, setImage] = useState<File | null>(null);
+  const [tag, setTag] = useState("random");
+
+  let data = new FormData();
+  data.append("image", image || "");
+  data.append("title", updatedTitle);
+  data.append("content", updatedContent);
+  data.append("tag", tag);
 
   useEffect(() => {
     if (role !== "ADMIN") {
       router.push("/unauthorized");
     }
-    specificPost = posts.find((post: any) => post.id === props.blogId);
+
+    const specificPost = posts.find((post: any) => post.id === blogId);
     if (!specificPost) {
       dispatch(
         saveBlog({
-          id: props.blogId,
+          id: blogId,
           title: "",
           content: "",
           isNew: true,
@@ -70,71 +90,68 @@ const WriteBlog = (props: any) => {
       setUpdatedContent(specificPost.content || "");
       setIsNew(specificPost.isNew);
     }
-  }, [props.blogId, posts]);
+  }, [blogId, posts]);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(event.target.files[0]);
+    }
+  };
 
   const handleSaveClick = () => {
     dispatch(
       updateBlog({
-        postId: props.blogId,
+        postId: blogId,
         updateTitle: updatedTitle,
-        updatedContent: updatedContent,
-        isNew: isNew,
-        author: { username: specificPost?.author?.username, role: "" },
+        updatedContent,
+        isNew,
+        author: { username: "", role: "" },
       })
     );
   };
 
-  const handleEditorChange = (newContent: any) => {
+  const handleEditorChange = (newContent: string) => {
     setUpdatedContent(newContent);
   };
 
   const handlePublish = async () => {
     try {
-      const data = {
-        title: updatedTitle,
-        content: updatedContent,
-      };
-
       let response;
       if (isNew) {
         response = await sendBlogtoAPI(data);
-        if (response.success) {
-          alert("Blog created successfully");
-          setIsNew(false);
-          dispatch(
-            finalUpdate({
-              postId: props.blogId,
-              isNew: false,
-              newId: response.blogData.blogId,
-              updatedContent: response.blogData.content,
-              updatedTitle: response.blogData.title,
-            })
-          );
-          router.push(`/blog/${response.blogData.slug}`);
-        }
       } else {
         response = await updateSpecificlog(
-          props.blogId,
+          blogId,
           updatedTitle,
           updatedContent
         );
-        if (response.success) {
-          alert("Blog updated successfully");
-          setIsNew(false);
-          dispatch(
-            finalUpdate({
-              postId: props.blogId,
-              isNew: false,
-              newId: response.data.id,
-              updatedContent: response.data.content,
-              updatedTitle: response.data.title,
-            })
-          );
-          router.push(`/blog/${response.data.slug}`);
-        }
       }
-    } catch (error) {
-      console.error("Error:", error);
+
+      if (response.success) {
+        const { blogData } = response;
+        const { id, content, title, slug } = blogData;
+        const successMessage = isNew
+          ? "Blog created successfully"
+          : "Blog updated successfully";
+
+        message.success(successMessage);
+        setIsNew(false);
+
+        dispatch(
+          finalUpdate({
+            postId: blogId,
+            isNew: false,
+            newId: id,
+            updatedContent: content,
+            updatedTitle: title,
+          })
+        );
+        router.push(`/blog/${slug}`);
+      } else {
+        message.error(response.message || "Something went wrong");
+      }
+    } catch (error: any) {
+      message.error(error.message);
     }
   };
 
@@ -146,8 +163,28 @@ const WriteBlog = (props: any) => {
           value={updatedTitle}
           placeholder="Insert title here"
           onChange={(e) => setUpdatedTitle(e.target.value)}
-          className="border-b-0 border-black w-full text-3xl hover:border-b-2 "
+          className="border-b-0 border-black w-full text-3xl hover:border-b-2 focus:outline-none focus:border-b-2 focus:border-black"
         />
+      </div>
+      <div className="mb-5">
+        <Input
+          id="picture"
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={handleFileChange}
+          required
+        />
+        <Select onValueChange={(value) => setTag(value)}>
+          <SelectTrigger className="w-full mt-5">
+            <SelectValue placeholder="Theme" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectItem value="light">Technical</SelectItem>
+            <SelectItem value="dark">Buisness</SelectItem>
+            <SelectItem value="management">Management</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <ReactQuill
         theme="snow"
@@ -160,10 +197,12 @@ const WriteBlog = (props: any) => {
         className="w-full h-96 border-2 border-black"
       />
       <div className="flex justify-end gap-2 mt-2">
-        <button onClick={handleSaveClick} className="mt-2 border-2 border-black p-2 ">
+        <button
+          onClick={handleSaveClick}
+          className="mt-2 border-2 border-black p-2 "
+        >
           Update
         </button>
-        <br />
         <button
           type="submit"
           className="mt-2 bg-blue-500 p-2 text-white"

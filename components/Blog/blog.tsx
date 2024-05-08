@@ -115,6 +115,10 @@ export default function Blog() {
   if (error) {
     return <h1>{error}</h1>;
   }
+  function stripHtmlTags(html: string) {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  }
 
   return (
     <div className="bg-white py-24 sm:py-32">
@@ -151,14 +155,12 @@ export default function Blog() {
                 <h2 className="text-xl font-semibold text-gray-800 mb-3">
                   {post.title}
                 </h2>
-                <ReactQuill
-                  value={post.content.slice(0, 80) + "..."}
-                  theme="snow"
-                  modules={{ toolbar: false }}
-                  bounds="#root"
-                  readOnly={true}
-                />
 
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: stripHtmlTags(post?.content).slice(0, 50) + "...",
+                  }}
+                ></div>
                 <div className="mt-4 flex justify-between items-center">
                   <a
                     href={`blog/${post.slug}`}

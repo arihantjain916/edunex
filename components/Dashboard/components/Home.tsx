@@ -57,8 +57,7 @@ export default function Home() {
     },
     {
       label: "Total Blog Posted",
-      comment: "10",
-      discription: "+20.1% from last month",
+      comment: posts?.length?.toString() || "10",
       icon: Rss,
     },
   ];

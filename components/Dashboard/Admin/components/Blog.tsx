@@ -61,13 +61,13 @@ export const DisplayBlog = () => {
   return (
     <>
       <div>
+        <AddBlog username={username} />
         <h1 className="text-2xl font-bold my-4 text-center">Your Blogs</h1>
       </div>
       {blogs.length === 0 ? (
         <div>Blog not found</div>
       ) : (
         <>
-          <AddBlog username={username} />
           <main className="container mx-auto mt-8">
             {blogs.map((blog) => (
               <article className="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -112,31 +112,13 @@ export const AddBlog = ({ username }: { username: String }) => {
   }
   return (
     <>
-      <header>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-          <div className="sm:flex sm:items-center sm:justify-between">
-            <div className="text-center sm:text-left">
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              Welcome Back,{username}!
-              </h1>
-
-              <p className="mt-1.5 text-sm text-gray-500">
-                Let's write a new blog post! 🎉
-              </p>
-            </div>
-
-            <div className="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
-              <button
-                className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
-                type="button"
-                onClick={handleClick}
-              >
-                Create Post
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <button
+        className="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+        type="button"
+        onClick={handleClick}
+      >
+        Create Post
+      </button>
     </>
   );
 };

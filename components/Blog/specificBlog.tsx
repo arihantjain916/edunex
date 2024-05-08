@@ -8,8 +8,8 @@ import CommentPage from "../comment/Comment";
 import Loading from "../loader/Loader";
 import { AuthorDetails } from "../Extra-Page/AuthorDetails";
 import { Seo } from "../Seo";
-import dynamic from 'next/dynamic';
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false })
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
 function formattedDate(date: any) {
@@ -60,13 +60,13 @@ const SpecificBlog = ({ slug }: any) => {
     <>
       <Seo
         title={apidata?.title!}
-        description={apidata?.content.slice(0, 400)!}
+        description={apidata?.content?.slice(0, 400)!}
       />
       <div>
         <div id="page-body" className="max-w-[1280px] my-0 mx-auto">
           <div id="center" className="w-full">
             <main>
-              <div className="title font-mono text-white">
+              <div className="title font-mono text-white ">
                 <p className="ml-4 mb-4 text-3xl font-serif capitalize">
                   {apidata?.title}
                 </p>
@@ -98,7 +98,6 @@ const SpecificBlog = ({ slug }: any) => {
                   <AuthorDetails
                     name={apidata?.author?.username!}
                     username={apidata?.author?.username!}
-                    role={apidata?.author?.role!}
                   />
                 </div>
                 <CommentPage pageSlug={apidata?.slug} />

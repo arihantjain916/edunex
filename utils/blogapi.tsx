@@ -32,16 +32,12 @@ export const getSpecificBlog = async (slug: string) => {
 export const sendBlogtoAPI = async (props: any) => {
   try {
     const token = getCookie();
-    const response = await axios.post(
-      `${API}/blog/add`,
-      { title: props.title, tag: "random", content: props.content },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          // "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.post(`${API}/blog/add`, props, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error) {
     return error;
