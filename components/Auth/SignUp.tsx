@@ -26,6 +26,7 @@ const SignUp = () => {
 
   const [error, setError] = useState("");
   const [close, setClose] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -63,6 +64,7 @@ const SignUp = () => {
       scrollToTop();
       return;
     }
+    setLoading(true);
 
     const apidata = await sendDataToRegisterApi(formData);
     if (apidata.success) {
@@ -73,8 +75,8 @@ const SignUp = () => {
         password: "",
         password_confirmation: "",
       });
-      setError("");
       toast.success(apidata.message);
+      setLoading(false);
       dispatch(
         register({
           username: formData.username,
@@ -89,8 +91,9 @@ const SignUp = () => {
         password_confirmation: "",
       });
       setError("");
-      router.replace("/auth/login");
+      router.push("/auth/login");
     } else {
+      setLoading(false);
       toast.error(apidata.response?.data?.error || "Something went wrong");
     }
   };
@@ -259,9 +262,23 @@ const SignUp = () => {
                   <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                     <button
                       type="submit"
+                      disabled={loading}
                       className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                     >
-                      Create an account
+                      {loading ? (
+                        <>
+                          <div className="flex gap-2 justify-center items-center">
+                            <img
+                              src="/Icons/fidget-spinner.png"
+                              alt="loader"
+                              className="w-9 animate-spin"
+                            />
+                            <span className="text-xl">Signin...</span>
+                          </div>
+                        </>
+                      ) : (
+                        "Create Account"
+                      )}
                     </button>
                     <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                       Already have an account?{" "}

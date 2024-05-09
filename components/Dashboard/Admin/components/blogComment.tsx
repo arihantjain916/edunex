@@ -32,6 +32,8 @@ const BlogComment = () => {
       </div>
     );
 
+  if (commentData.length === 0) return <p>No comments found</p>;
+
   return (
     <>
       <main className="container mx-auto mt-8">

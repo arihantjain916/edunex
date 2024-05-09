@@ -52,12 +52,12 @@ export default function Home() {
   const cardData: CardProps[] = [
     {
       label: "Total Comment",
-      comment: commentData?.totalComment?.toString() || "10",
+      comment: commentData?.totalComment?.toString() || "0",
       icon: MessageCircle,
     },
     {
       label: "Total Blog Posted",
-      comment: posts?.length?.toString() || "10",
+      comment: posts?.length?.toString() || "0",
       icon: Rss,
     },
   ];
@@ -85,7 +85,7 @@ export default function Home() {
           <section>
             <p>Recent Comments</p>
             <p className="text-sm text-gray-400">
-              {`You post total ${commentData?.totalComment} comment.`}
+              {`You post total ${commentData?.totalComment || "0"} comment.`}
             </p>
           </section>
           {commentData?.data?.map((d: any, i: any) => (
