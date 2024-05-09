@@ -4,11 +4,13 @@ import PageTitle from "@/components/ui/pagetitle";
 import { MessageCircle, Rss } from "lucide-react";
 import Card, { CardContent, CardProps } from "@/components/ui/card";
 import BarChart from "@/components/ui/barchart";
-import SalesCard, { SalesProps } from "@/components/ui/salescard";
+import SalesCard from "@/components/ui/salescard";
 import { getAllCommentofUser } from "@/utils/commentapi";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { getBlogbyUsername } from "@/utils/blogapi";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
+import { saveBlog } from "@/redux/features/blog";
 
 export type commentData = {
   message: string;
@@ -23,6 +25,8 @@ export type commentType = {
 };
 export default function Home() {
   const { posts } = useSelector((state: RootState) => state.blog);
+  const { username } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   const [commentData, usecommentData] = useState<commentData>();
   useEffect(() => {
@@ -33,6 +37,24 @@ export default function Home() {
 
     getComment();
   }, []);
+  useEffect(() => {
+    const getBlogs = async () => {
+      try {
+        const response = await getBlogbyUsername(username);
+        if (response.data) {
+          response.data.forEach((blog: any) => {
+            dispatch(saveBlog(blog));
+          });
+        } else {
+          console.log(response.response.data.error);
+        }
+      } catch (error) {
+        console.log("An error occurred while fetching data.");
+      }
+    };
+
+    getBlogs();
+  }, [username]);
 
   const formattedDate = (dateI: string) => {
     var date = new Date(dateI);

@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { QuizIcon } from "@/utils/SVGIcon";
 import { RootState } from "@/redux/store";
+import { defaultBlog } from "@/redux/features/blog";
 
 const UserSideNav = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const UserSideNav = () => {
 
   function handleLogout() {
     dispatch(logout());
+    dispatch(defaultBlog());
     router.push("/auth/login");
   }
 

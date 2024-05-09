@@ -2,9 +2,7 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Disclosure } from "@headlessui/react";
 import {
-  MdOutlineSettings,
   MdOutlineLogout,
-  MdOutlineQuiz,
   MdOutlineDashboard,
 } from "react-icons/md";
 import { PiExam } from "react-icons/pi";
@@ -17,6 +15,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { RootState } from "@/redux/store";
 import { QuizIcon } from "@/utils/SVGIcon";
+import { defaultBlog } from "@/redux/features/blog";
 
 const AdminSideNavbar = () => {
   const dispatch = useDispatch();
@@ -26,6 +25,7 @@ const AdminSideNavbar = () => {
 
   function handleLogout() {
     dispatch(logout());
+    dispatch(defaultBlog());
     router.push("/auth/login");
   }
 
