@@ -70,7 +70,7 @@ const SpecificBlog = ({ slug }: any) => {
                 className="title font-mono text-white bg-contain"
                 style={{ backgroundImage: `url(${apidata?.image})` }}
               >
-                <p className="ml-4 mb-4 text-3xl font-serif capitalize">
+                <p className="ml-4 mb-4 text-3xl font-serif capitalize text-black">
                   {apidata?.title}
                 </p>
               </div>
