@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { saveBlog } from "@/redux/features/blog";
 import { getBlogbyUsername } from "@/utils/blogapi";
 import Loader from "@/components/loader/Loader";
 import { useRouter } from "next/navigation";
@@ -20,7 +19,6 @@ export interface Blog {
 
 export const DisplayBlog = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const { username } = useSelector((state: RootState) => state.auth);
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -32,9 +30,6 @@ export const DisplayBlog = () => {
         const response = await getBlogbyUsername(username);
         if (response.data) {
           setBlogs(response.data);
-          response.data.forEach((blog: any) => {
-            dispatch(saveBlog(blog)); // Dispatch each blog item individually
-          });
         } else {
           console.log(response.response.data.error);
         }
