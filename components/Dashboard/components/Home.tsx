@@ -52,7 +52,7 @@ export default function Home() {
   const cardData: CardProps[] = [
     {
       label: "Total Comment",
-      comment: commentData?.totalComment.toString() || "10",
+      comment: commentData?.totalComment?.toString() || "10",
       icon: MessageCircle,
     },
     {
@@ -66,7 +66,7 @@ export default function Home() {
     <div className="flex flex-col gap-5  w-full">
       <PageTitle title="Dashboard" />
       <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
-        {cardData.map((d, i) => (
+        {cardData?.map((d, i) => (
           <Card
             key={i}
             comment={d.comment}
