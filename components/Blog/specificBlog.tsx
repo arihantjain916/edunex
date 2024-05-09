@@ -87,16 +87,6 @@ const SpecificBlog = ({ slug }: any) => {
                     readOnly={true}
                   />
                 </div>
-                {apidata?.image && (
-                  <Image
-                    src={apidata?.image}
-                    alt="blog image"
-                    width={800}
-                    height={20}
-                    className="mx-auto mb-1"
-                  />
-                )}
-
                 <div className="mb-4">
                   <AuthorDetails
                     name={apidata?.author?.username!}
