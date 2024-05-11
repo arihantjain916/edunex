@@ -4,5 +4,5 @@
 
 .ql-container.ql-snow {
     border: none !important;
-    height: auto;
+    height: auto !important;
 }
