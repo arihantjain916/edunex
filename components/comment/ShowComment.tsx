@@ -1,4 +1,5 @@
 import { getAllComment } from "@/utils/commentapi";
+import { message } from "antd";
 import { useEffect, useState } from "react";
 
 export interface Comment {
@@ -48,7 +49,7 @@ const ShowComment = (props: Props) => {
         }));
         setcomment(formattedData);
       } else {
-        console.log(comment.response.data.error);
+        message.error(comment.response.data.error);
       }
     } catch (error) {
       alert("An error occurred while fetching data.");

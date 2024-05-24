@@ -8,47 +8,55 @@ import { message, Table } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash, faAdd } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@/app/loading";
-import { render } from "react-dom";
 
 const QuizIndex = () => {
   const router = useRouter();
   const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  async function fetchExams() {
+  const fetchExams = async () => {
     setLoading(true);
-    const res = await getAllExam();
-    setLoading(false);
-    if (res.success) {
-      setExams(res.data);
-    } else {
-      message.error(res.response?.data?.error || "Something went wrong");
+    try {
+      const res = await getAllExam();
+      if (res.success) {
+        setExams(res.data);
+      } else {
+        message.error(res.response?.data?.error || "Something went wrong");
+      }
+    } catch (error: any) {
+      message.error("Something went wrong while fetching exams");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
-  async function handleDeleteExam(examId: String) {
+  const handleDeleteExam = async (examId: any) => {
     setLoading(true);
-    const res = await deleteExam(examId);
-    setLoading(false);
-    if (res.success) {
-      fetchExams();
-    } else {
-      message.error(res.response?.data?.error || "Something went wrong");
+    try {
+      const res = await deleteExam(examId);
+      if (res.success) {
+        fetchExams();
+      } else {
+        message.error(res.response?.data?.error || "Something went wrong");
+      }
+    } catch (error) {
+      message.error("Something went wrong while deleting the exam");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     fetchExams();
   }, []);
 
-  const columns = [
+  const columns: any = [
     { title: "Exam Name", dataIndex: "name" },
     {
       title: "Duration",
       dataIndex: "duration",
-      render: (text: any, record: any) => {
-        return `${record.duration} seconds`;
-      },
+      render: (text: any, record: { duration: any }) =>
+        `${record.duration} seconds`,
     },
     { title: "Category", dataIndex: "category" },
     { title: "Total Marks", dataIndex: "totalMarks" },
@@ -56,7 +64,7 @@ const QuizIndex = () => {
     {
       title: "Action",
       dataIndex: "action",
-      render: (text: any, record: any) => (
+      render: (text: any, record: { id: any }) => (
         <div className="flex gap-2">
           <div
             onClick={() => router.push(`/dashboard/exams/edit/${record.id}`)}
@@ -104,7 +112,7 @@ const QuizIndex = () => {
       </div>
       <div className="divider"></div>
       {exams.length > 0 ? (
-        <Table columns={columns} dataSource={exams} />
+        <Table columns={columns} dataSource={exams} rowKey="id" />
       ) : (
         <p>No exams found.</p>
       )}

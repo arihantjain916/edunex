@@ -63,7 +63,6 @@ const WriteExamQuiz = ({ id }: { id: String }) => {
     try {
       setLoading(true);
       const response = await getExambyId(id);
-      console.log(response);
 
       if (response.success) {
         setExamData(response.data);

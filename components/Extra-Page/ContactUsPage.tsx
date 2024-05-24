@@ -60,7 +60,6 @@ const ContactUs = () => {
     } else {
       toast.error(apiData.response?.data?.error || "Something went wrong");
     }
-    console.log(formData);
   };
   return (
     <>

@@ -10,13 +10,13 @@ export interface Contact {
 }
 
 export const sendDataToContactApi = async (props: Contact) => {
-try {
+  try {
     const response = await axios.post(`${API}/contact/add/`, {
       ...props,
     });
     return response.data;
   } catch (error) {
-    console.error("Error sending data to comment API:", error); // Log any errors for debugging
-    throw error; // Rethrow the error to handle it elsewhere if needed
+    console.error("Error sending data to comment API:", error); 
+    throw error;
   }
 };

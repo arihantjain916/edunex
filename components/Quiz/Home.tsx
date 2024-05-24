@@ -1,11 +1,12 @@
 "use client";
 
-import { Col, Row } from "antd";
+import { Col, message, Row } from "antd";
 import { useEffect, useState } from "react";
 import { getAllExam } from "@/utils/examapi";
 import PageTitle from "../Layout/pageTitle";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Loading from "@/app/loading";
 
 type QuizProps = {
   id: any;
@@ -17,20 +18,28 @@ type QuizProps = {
 };
 
 const QuizPage = () => {
-  const [exams, setExams] = useState<QuizProps[]>([]);
+  const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  async function getExam() {
-    setLoading(true);
-    const res = await getAllExam();
-    setLoading(false);
-    if (res.success) {
-      setExams(res.data);
-    } else {
-      console.error(res.response?.data?.error || "Something went wrong");
+  const getExam = async () => {
+    try {
+      setLoading(true);
+      const res = await getAllExam();
+      if (res.success) {
+        setExams(res.data);
+      } else {
+        message.error(res.response?.data?.error || "Something went wrong");
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      message.error("Some error occured!!");
     }
-  }
+  };
+  useEffect(() => {
+    getExam();
+  }, []);
 
   if (exams.length === 0) {
     return (
@@ -43,15 +52,16 @@ const QuizPage = () => {
     );
   }
 
-  useEffect(() => {
-    getExam();
-  }, []);
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <PageTitle title={"Quizes"} />
       <div className="divider"></div>
       <Row gutter={[16, 16]}>
-        {exams.map((exam) => (
+        {exams.map((exam: any) => (
           <Col span={6}>
             <div className="card-lg flex flex-col gap-1 p-2 ml-3">
               <h1 className="text-2xl">{exam.name}</h1>

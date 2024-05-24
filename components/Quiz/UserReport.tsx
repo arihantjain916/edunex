@@ -52,7 +52,6 @@ const UserReport = () => {
     try {
       setLoading(true);
       const response = await getUserReport();
-      console.log("Response from API:", response);
       if (response.success) {
         const formattedData = response.data.map(
           (item: { dateCreated: any; result: { correctAnswer: any } }) => ({
@@ -64,13 +63,12 @@ const UserReport = () => {
             },
           })
         );
-        console.log("Formatted Data:", formattedData);
         setReportsData(formattedData);
       } else {
         message.error(response.message);
       }
     } catch (error: any) {
-      console.error("Error fetching data:", error);
+      message.error("Error fetching data:", error);
       message.error(error.message);
     } finally {
       setLoading(false);

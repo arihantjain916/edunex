@@ -9,6 +9,7 @@ import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 import Link from "next/link";
+import { message } from "antd";
 
 export interface Blog {
   id: string;
@@ -31,10 +32,10 @@ export const DisplayBlog = () => {
         if (response.data) {
           setBlogs(response.data);
         } else {
-          console.log(response.response.data.error);
+          message.error(response.response.data.error);
         }
       } catch (error) {
-        console.log("An error occurred while fetching data.");
+        message.error("An error occurred while fetching data.");
       } finally {
         setLoading(false);
       }

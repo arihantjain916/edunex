@@ -11,6 +11,7 @@ import { getBlogbyUsername } from "@/utils/blogapi";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { saveBlog } from "@/redux/features/blog";
+import { message } from "antd";
 
 export type commentData = {
   message: string;
@@ -46,10 +47,10 @@ export default function Home() {
             dispatch(saveBlog(blog));
           });
         } else {
-          console.log(response.response.data.error);
+          message.error(response.response.data.error);
         }
       } catch (error) {
-        console.log("An error occurred while fetching data.");
+        message.error("An error occurred while fetching data.");
       }
     };
 
