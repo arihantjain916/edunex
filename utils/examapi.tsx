@@ -106,7 +106,7 @@ export const editQuestion = async (id: string, data: any) => {
   }
 };
 
-export const deleteQuestion = async (id: string) => {
+export const deleteQuestion = async (id: Number) => {
   try {
     const response = await axios.delete(`${API}/exam/delete-question/${id}`, {
       headers: {

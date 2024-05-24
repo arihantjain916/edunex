@@ -42,8 +42,16 @@ const AddExam = (props: any) => {
         throw new Error("Exam duration should be greater than 0");
       }
 
-      if (totalMarks! < passingMarks) {
+      if (parseInt(totalMarks) < parseInt(passingMarks)) {
         throw new Error("Total Marks should be greater than Passing Marks");
+      }
+
+      if (
+        /^\d+$/.test(totalMarks) === false ||
+        /^\d+$/.test(passingMarks) === false ||
+        /^\d+$/.test(duration) === false
+      ) {
+        throw new Error("Marks or duration should be a number");
       }
 
       setLoading(true);
@@ -80,7 +88,7 @@ const AddExam = (props: any) => {
     }
   };
 
-  const deleteQuestionHandler = async (quesId: string) => {
+  const deleteQuestionHandler = async (quesId: Number) => {
     try {
       const response = await deleteQuestion(quesId);
       if (response.success) {
@@ -142,7 +150,12 @@ const AddExam = (props: any) => {
     {
       title: "Action",
       dataIndex: "action",
-      render: (text: any, record: any) => (
+      render: (
+        text: any,
+        record: {
+          id: Number;
+        }
+      ) => (
         <div className="flex gap-2">
           <div
             onClick={() => {
@@ -190,7 +203,7 @@ const AddExam = (props: any) => {
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Exam Duration" name="duration">
-                    <input id="input" type="number" />
+                    <input id="input" type="phone" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
@@ -209,12 +222,12 @@ const AddExam = (props: any) => {
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Total Marks" name="totalMarks">
-                    <input id="input" type="number" inputMode="numeric" />
+                    <input id="input" type="phone" inputMode="numeric" />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Passing Marks" name="passingMarks">
-                    <input id="input" type="number" inputMode="numeric" />
+                    <input id="input" type="phone" inputMode="numeric" />
                   </Form.Item>
                 </Col>
               </Row>

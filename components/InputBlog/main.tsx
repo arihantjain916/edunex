@@ -93,8 +93,14 @@ const WriteBlog = ({ blogId }: { blogId: string }) => {
   }, [blogId, posts]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
+    if (
+      event.target.files &&
+      event.target.files[0] &&
+      event.target.files[0].type.includes("image")
+    ) {
       setImage(event.target.files[0]);
+    } else {
+      message.error("Please select an image file");
     }
   };
 
@@ -176,7 +182,7 @@ const WriteBlog = ({ blogId }: { blogId: string }) => {
         />
         <Select onValueChange={(value) => setTag(value)}>
           <SelectTrigger className="w-full mt-5">
-            <SelectValue placeholder="Theme" />
+            <SelectValue placeholder="Tag" />
           </SelectTrigger>
           <SelectContent className="bg-white">
             <SelectItem value="light">Technical</SelectItem>
