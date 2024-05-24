@@ -23,6 +23,7 @@ const QuizPage = () => {
   const router = useRouter();
 
   const getExam = async () => {
+    setLoading(true);
     try {
       setLoading(true);
       const res = await getAllExam();
@@ -35,11 +36,17 @@ const QuizPage = () => {
     } catch (error) {
       setLoading(false);
       message.error("Some error occured!!");
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     getExam();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   if (exams.length === 0) {
     return (
@@ -50,10 +57,6 @@ const QuizPage = () => {
         </div>
       </>
     );
-  }
-
-  if (loading) {
-    return <Loading />;
   }
 
   return (
